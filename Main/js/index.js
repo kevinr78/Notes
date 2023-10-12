@@ -9,9 +9,12 @@ const task_body = document.getElementById("task_body");
 const task_priority = document.getElementById("task_priority");
 const task_due_date = document.getElementById("task_due_date");
 const save_task_button = document.getElementById("save_task_button");
-const taskCardContainer = document.querySelector(".task_list");
+const taskCardContainer = document.querySelector(".task_card_container");
 const new_task_close_button = document.querySelector(".close_button");
 const new_task_add_button = document.querySelector(".add_button");
+const taskCardCloseBtn = document.querySelector(".task_card_close_button");
+
+const sideNavMenuBtn = document.querySelector(".side_menu_button");
 
 class Task {
   constructor(title, body, date, priority) {
@@ -35,6 +38,9 @@ document
     document.querySelector(".toggle_input").classList.add("expand");
   });
 
+sideNavMenuBtn.addEventListener("click", (e) => {
+  document.querySelector(".side_menu").classList.add("expand_side");
+});
 new_task_add_button.addEventListener("click", () => {
   createNewTask();
 });
@@ -57,13 +63,18 @@ function createNewTask() {
   /*  tempTask["create_date"] = task_due_date.value; */
 
   taskList.push(tempTask);
-  console.log(taskList);
+
   updateUi(tempTask);
   taskCount++;
 }
 
 function updateUi(task) {
-  const { title, body, priority } = task;
+  const { id, title, body, priority } = task;
+  let tHeader, tBody, tPriority, taskCardPriorityBadge, tDate, tCloseBtn;
+  let taskCardTemplate = document.querySelector("#task_card_template");
+
+  let cardClone = taskCardTemplate.content.cloneNode(true);
+  console.log(cardClone.querySelector(".task_card_header").dataset);
   let badgeColor =
     priority === "1"
       ? "text-bg-danger"
@@ -71,64 +82,22 @@ function updateUi(task) {
       ? "text-bg-warning"
       : "text-bg-success";
 
-  /*   let taskCard = `
-  <div class=" task_card">
-  <div class="card-header">${title}</div>
-  <div class="card-body">
-    <h5 class="card-title">${body}</h5>
-  </div>
-  <div class="card-metadata">
-    <h5 class="card-text">
-      <span class="badge text-bg-secondary ${badgeColor}">
-        <span class="material-symbols-outlined">
-          priority_high
-        </span> 
-        ${priority === 1 ? "High" : priority === 2 ? "Medium" : "Low"}
-      </span>
-    </h5>
-    <h5 class="card-text">
-      <span class="badge text-bg-secondary">
-        <span class="material-symbols-outlined mr-1">  today </span>
-        ${create_date}
-      </span>
-    </h5>
-  </div>
-</div>
-  `; */
+  tHeader = cardClone.querySelectorAll("#task_card_header_text")[0];
+  tBody = cardClone.querySelectorAll(".task_card_body_content")[0];
+  tCloseBtn = cardClone.querySelectorAll("#delete_card_button")[0];
+  tCloseBtn.addEventListener("click", removeCard);
+  tPriority = cardClone.querySelectorAll(".card_metadata_priority")[0];
+  tDate = cardClone.querySelectorAll(".card_metadata_date")[0];
+  taskCardPriorityBadge = cardClone.querySelector(".card_metadata_body");
+  cardClone.querySelector(".task_card").id = `card_${id}`;
+  tHeader.textContent = title;
+  tBody.textContent = body;
+  tPriority.textContent =
+    priority === "1" ? "High" : priority === "2" ? "Medium" : "Low";
+  tDate.textContent = new Date().toLocaleDateString();
+  taskCardPriorityBadge.classList.add(badgeColor);
 
-  let taskCard = `    <div class="task_card">
-  <div class="task_card_header">
-    <p>${title}</p>
-    <span class="material-symbols-outlined">
-      close
-    </span>
-  </div>
-  <div class="task_card_body">
-    <div class="task_card_body_content">
-    ${body}
-    </div>
-  </div>
-  <div class="card_metadata">
-    <p class="card_metadata_body ${badgeColor}">
-      <span class="material-symbols-outlined">
-        priority_high
-      </span> 
-      <span class=" ">
-      ${priority === "1" ? "High" : priority === "2" ? "Medium" : "Low"}
-      </span>
-    </p>
-    <p class="card_metadata_body text-bg-secondary">
-      <span class="material-symbols-outlined">
-        schedule
-        </span>
-      <span class=" ">
-      15/09/2000
-      </span>
-    </p>
-  </div>
-</div>`;
-
-  taskCardContainer.insertAdjacentHTML("beforeend", taskCard);
+  taskCardContainer.appendChild(cardClone);
   clearTaskModal();
 }
 
@@ -136,4 +105,10 @@ function clearTaskModal() {
   task_title.value = "";
   task_body.value = "";
   task_priority.value = "3";
+}
+
+function removeCard(e) {
+  let cardId = e.target.parentElement.parentElement.id;
+  console.log(cardId);
+  document.getElementById(cardId).remove();
 }

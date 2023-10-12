@@ -25,7 +25,7 @@
   </head>
   <body>
     <!-- Main -->
-    <div class="container-fluid side_nav_container">
+    <div class="side_nav_container" style="height: 100vh;">
       <!-- Navigation Bar-->
       <header class="nav_header flex">
           <div class="side_menu_btn_container flex">
@@ -56,16 +56,40 @@
             </div>
           </div>
       </header>
-   
+     
     
       <section class="task_viewer_container">
+        <div class="side_menu_container">
+          
+            <nav class="nav_list">
+              <div role="button" class="nav_items" tabindex="0" data-tooltip-text="Notes" aria-label="Notes" tooltip-suspended="false" style="user-select: none;">
+                <span class="material-symbols-outlined">
+                  description
+                  </span>
+                  <span class="menu_text"> Notes</span>
+              </div>
+              <div role="button" class="nav_items" tabindex="0" data-tooltip-text="Reminders" aria-label="Notes" tooltip-suspended="false" style="user-select: none;">
+                  <span class="material-symbols-outlined">
+                    notifications
+                  </span>
+                  <span class="menu_text"> Reminders</span>
+              </div>
+              <div role="button" class="nav_items" tabindex="0" data-tooltip-text="Bin" aria-label="Notes" tooltip-suspended="false" style="user-select: none;">
+                <span class="material-symbols-outlined">
+                  delete
+                  </span>
+                  <span class="menu_text"> Bin</span>
+              </div>
+            </nav>
+          
+        </div>
         <div class="task_list">
           <div class="new_task_container">
             <div class="new_task_input_container" id="new_task_input_container">
               <div class="task_data_input">
                 <div class="task_title_input_container">
                   <div class="task_title_input" contenteditable="true" aria-multiline="true" id="task_title" data-placeholder=" Title...">
-                   
+                   Title of Card
                   </div>
                 </div>
                 <div class="priority_select_container modal_metadata_container">
@@ -83,7 +107,7 @@
                 <div class="task_data_input">
                   <div class="task_body_input_container">
                     <div class="task_body_input" contenteditable="true" aria-multiline="true" id="task_body" aria-placeholder=" Body..." role="textbox">
-                      Body...
+                      dsalkjfcbsadjfcswdeofbeafwaef
                     </div>
                   </div>
                   <!-- <div class="date_select_container metadata_container">
@@ -121,34 +145,37 @@
               </div>
             </div>
           </div>
-          <div class="task_card">
-            <div class="task_card_header">
-              <p>Notes</p>
-            </div>
-            <div class="task_card_body">
-              <div class="task_card_body_content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero culpa, repellat iure provident fugiat nulla alias, voluptatem sapiente id, ea molestiae voluptas. Expedita, magnam distinctio?
+          <div class="task_card_container">
+            <template id="task_card_template">
+              <div class="task_card" >
+                <div class="task_card_header" >
+                  <p id="task_card_header_text"></p>
+                  <span class="material-symbols-outlined" id="delete_card_button" role="button">disabled_by_default</span>
+                </div>
+                <div class="task_card_body">
+                  <div class="task_card_body_content">
+                    
+                  </div>
+                </div>
+                <div class="card_metadata">
+                  <p class="card_metadata_body text-bg-secondary ">
+                    <span class="material-symbols-outlined">
+                      priority_high
+                    </span> 
+                    <span class="card_metadata_priority"></span>
+                  </p>
+                  <p class="card_metadata_body text-bg-secondary">
+                    <span class="material-symbols-outlined">
+                      schedule
+                      </span>
+                    <span class="card_metadata_date"></span>
+                  </p>
+                </div>
               </div>
-            </div>
-            <div class="card_metadata">
-              <p class="card_metadata_body text-bg-secondary text-bg-warning">
-                <span class="material-symbols-outlined">
-                  priority_high
-                </span> 
-                <span class=" ">
-                 High
-                </span>
-              </p>
-              <p class="card_metadata_body text-bg-secondary">
-                <span class="material-symbols-outlined">
-                  schedule
-                  </span>
-                <span class=" ">
-                15/09/2000
-                </span>
-              </p>
-            </div>
+            </template>
+       
           </div>
+          
         
           </div>
         </div>
