@@ -25,20 +25,29 @@ app.post("/newTask", async (req, res) => {
   console.log(cleanedData);
   let newNote = new Note(cleanedData);
   try {
-    const n1 = await newNote.save();
-    console.log(n1);
+    const note = await newNote.save();
+    res.json({
+      note,
+      ok: true,
+    });
   } catch (error) {
-    console.log(error);
+    res.json({
+      note,
+      ok: false,
+    });
   }
 });
 
+app.delete("/removeTask", async (req, res) => {
+  let id = req.query.id;
+});
 function trimData(Data) {
   const { id, title, body, priority } = Data;
   let Uid = Number(id.toString().trim());
   let Utitle = title.trim();
   let Ubody = body.trim();
   let Upriority = Number(priority.toString().trim());
-  return { Utitle, Ubody, Upriority };
+  return { Uid, Utitle, Ubody, Upriority };
 }
 app.listen("3000", () => {
   console.log("Listening on port 3000");
