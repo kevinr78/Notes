@@ -192,6 +192,7 @@ align-items: center;
 .task_list_header p{
     margin-top:10px ;
    margin-right: 20px;
+   overflow-wrap: break-word;
 }
 
 .col_card_container{

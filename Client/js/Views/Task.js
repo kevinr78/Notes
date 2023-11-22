@@ -9,6 +9,15 @@ class NoteView {
     this.date = date;
     this.priority = priority;
   } */
+  addHandlerRemoveCard(handler) {
+    document
+      .querySelector(".task_card_container")
+      .addEventListener("click", (e) => {
+        let ele = e.target.closest("span");
+        if (!ele) return;
+        handler(ele);
+      });
+  }
 
   renderUI() {
     let badgeColor =
@@ -20,8 +29,10 @@ class NoteView {
     let template = this.#generateNoteTemplate(noteData.currentNote, badgeColor);
     this._parentElement.insertAdjacentHTML("beforeend", template);
 
-    document.querySelector("");
     this.clearTaskModal();
+  }
+  removeNotefromView(note) {
+    document.querySelector(`div[data-id="${note.objectId}"]`).remove();
   }
 
   #generateNoteTemplate({ id, title, body, priority, objectId }, badgeColor) {
@@ -29,7 +40,7 @@ class NoteView {
         <div class="task_card" data-id=${objectId}>
                 <div class="task_card_header" >
                   <p id="task_card_header_text">${title}</p>
-                  <span class="material-symbols-outlined" id="delete_card_button" role="button">disabled_by_default</span>
+                  <span class="material-symbols-outlined" id="delete_card_button" data-id=${objectId} role="button">disabled_by_default</span>
                 </div>
                 <div class="task_card_body">
                   <div class="task_card_body_content">

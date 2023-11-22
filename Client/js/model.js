@@ -20,9 +20,9 @@ export function createNewNote() {
     return;
   }
   tempNote["id"] = Note.noteCount + 1;
-  tempNote["title"] = task_title.textContent || null;
-  tempNote["body"] = task_body.textContent;
-  tempNote["priority"] = task_priority.value;
+  tempNote["title"] = task_title.textContent.trim() || null;
+  tempNote["body"] = task_body.textContent.trim();
+  tempNote["priority"] = task_priority.value.trim();
 
   /*  tempTask["create_date"] = task_due_date.value; */
 
@@ -33,8 +33,22 @@ export function createNewNote() {
 
 export function updateNoteId(note) {
   let findNote = Note.noteList.find((item) => {
-    return (item.id = Note.currentNote.id);
+    return item.id === Note.currentNote.id;
   });
   findNote.objectId = note.note._id;
   Note.currentNote["objectId"] = note.note._id;
+}
+
+export function deleteNoteFromLocal({ deletedNote }) {
+  let noteList = Note.noteList;
+  let noteTobeDeleted = noteList.find((note, idx) => {
+    return note.objectId === deletedNote._id;
+  });
+
+  noteList.splice(
+    noteList.findIndex((note) => note.objectId === deletedNote._id),
+    1
+  );
+
+  return noteTobeDeleted;
 }
