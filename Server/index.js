@@ -4,10 +4,11 @@ const dotenv = require("dotenv").config();
 const Note = require("./model/noteModel");
 const connection = require("./Conn");
 const cors = require("cors");
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-/* connection.ConnectDb(); */
+connection.ConnectDb();
 /* app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -70,5 +71,4 @@ function trimData(Data) {
 }
 app.listen("3000", () => {
   console.log("Listening on port 3000");
-  console.log();
 });
