@@ -3,12 +3,13 @@ const app = express();
 const dotenv = require("dotenv").config();
 const Note = require("./model/noteModel");
 const connection = require("./Conn");
+console.log("DB");
 const cors = require("cors");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-connection.ConnectDb();
+/* connection.ConnectDb(); */
 /* app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -52,6 +53,27 @@ app.delete("/deleteNote", async (req, res) => {
     console.log("Deleted Note : ", deletedNote);
     res.json({
       deletedNote,
+      ok: true,
+    });
+  } catch (error) {
+    res.json({
+      error,
+      ok: false,
+    });
+  }
+});
+
+app.post("/getNote", async (req, res) => {
+  let noteId = req.body.id.trim();
+
+  try {
+    let note = await Note.findById({ _id: noteId });
+    if (!note) {
+      throw new Error("Error while fetching note");
+    }
+
+    res.json({
+      note,
       ok: true,
     });
   } catch (error) {
