@@ -24,6 +24,39 @@
     <link rel="stylesheet" href="../css/index.css" />
   </head>
   <body>
+  <!--   <div class="modal">
+     
+      <div class="modal-content">
+        <header> 
+          <span class="close">&times;</span>
+          <div class="modal_priority_select_container ">
+            <span class="material-symbols-outlined">
+              priority_high
+              </span> 
+            <select  required aria-label="select priority" name="modal_task_priority" id="modal_task_priority">
+              <option value="3">Low</option>
+              <option value="2">Medium</option>
+              <option value="1">High</option>
+            </select>
+          </div>
+        </header>
+        <section>
+          <p class="modal__note_title" contenteditable="true">
+            <strong>
+              Some text in the Modal..
+            </strong>
+           </p>
+
+          <div class="modal_note_body"  contenteditable="true">
+            Body of the model
+          </div>
+        </section>
+        <footer>
+          
+        </footer>
+      </div>
+     </div> -->
+ <!--  -->
     <!-- Main -->
     <div class="side_nav_container" style="height: 100vh;">
       <!-- Navigation Bar-->
@@ -84,10 +117,12 @@
                   </span>
                   <span class="menu_text"> Bin</span>
               </div>
+           
             </nav>
           
         </div>
         <div class="task_list">
+      
           <div class="new_task_container">
             <div class="new_task_input_container" id="new_task_input_container">
               <div class="task_data_input">
@@ -96,7 +131,7 @@
                  Kevin
                   </div>
                 </div>
-                <div class="priority_select_container modal_metadata_container">
+                <div class="priority_select_container ">
                   <span class="material-symbols-outlined">
                     priority_high
                     </span> 
@@ -150,34 +185,33 @@
             </div>
           </div>
           <div class="task_card_container">
-          <!--   <template id="task_card_template">
-              <div class="task_card" >
-                <div class="task_card_header" >
-                  <p id="task_card_header_text"></p>
-                  <span class="material-symbols-outlined" id="delete_card_button" role="button">disabled_by_default</span>
-                </div>
-                <div class="task_card_body">
-                  <div class="task_card_body_content">
-                    
+              <div class="notes_list">
+                <div class="task_card" data-id="6575f095939d9f6aee43fc94" data-action="open_modal">
+                  <div class="task_card_header">
+                    <p id="task_card_header_text" contenteditable="true">Kevindwsda    <span class="material-symbols-outlined" id="delete_card_button" data-id="6575f095939d9f6aee43fc94" data-action="close" role="button">disabled_by_default</span></p>
+                 
+                  </div>
+                  <div class="task_card_body">
+                    <div class="task_card_body_content" contenteditable="true">
+                    Task Body
+                    </div>
+                  </div>
+                  <div class="card_metadata">
+                    <p class="card_metadata_body text-bg-success">
+                      <span class="material-symbols-outlined">
+                        priority_high
+                      </span> 
+                      <span class="card_metadata_priority">Low</span>
+                    </p>
+                    <p class="card_metadata_body text-bg-secondary">
+                      <span class="material-symbols-outlined">
+                        schedule
+                        </span>
+                      <span class="card_metadata_date"> 10/12/2023</span>
+                    </p>
                   </div>
                 </div>
-                <div class="card_metadata">
-                  <p class="card_metadata_body text-bg-secondary ">
-                    <span class="material-symbols-outlined">
-                      priority_high
-                    </span> 
-                    <span class="card_metadata_priority"></span>
-                  </p>
-                  <p class="card_metadata_body text-bg-secondary">
-                    <span class="material-symbols-outlined">
-                      schedule
-                      </span>
-                    <span class="card_metadata_date"></span>
-                  </p>
-                </div>
               </div>
-            </template> -->
-       
           </div>
           
         
@@ -194,7 +228,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <script type="module" src="../js/index.js"></script>
+   <!--  <script type="module" src="../js/index.js"></script> -->
     <script type="module" src="../js/controller.js"></script>
   </body>
 </html>

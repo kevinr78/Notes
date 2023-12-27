@@ -47,3 +47,9 @@ export async function sendAPIRequest(endpoint, method, payload) {
     console.error(error);
   }
 }
+
+function getDataAttr(ele) {
+  return ele.dataset.action;
+}
+
+export function callCorrectFunc(eve) {}

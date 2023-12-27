@@ -2,6 +2,7 @@ export const Note = {
   currentNote: null,
   noteList: [],
   noteCount: 0,
+  lastNoteEdited: null,
 };
 
 const task_title = document.getElementById("task_title");

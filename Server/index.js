@@ -26,7 +26,6 @@ app.get("/", (req, res) => {
 
 app.post("/newTask", async (req, res) => {
   let cleanedData = trimData(req.body);
-  console.log(cleanedData);
   let newNote = new Note(cleanedData);
   try {
     const note = await newNote.save();
@@ -50,7 +49,7 @@ app.delete("/deleteNote", async (req, res) => {
     if (!deletedNote) {
       throw new Error("Error while deleting note");
     }
-    console.log("Deleted Note : ", deletedNote);
+
     res.json({
       deletedNote,
       ok: true,
@@ -71,7 +70,25 @@ app.post("/getNote", async (req, res) => {
     if (!note) {
       throw new Error("Error while fetching note");
     }
+    note.Utitle = note.Utitle.trim();
+    note.Ubody = note.Ubody.trim();
+    note.Upriority = note.Upriority.toString().trim();
 
+    res.json({
+      note,
+      ok: true,
+    });
+  } catch (error) {
+    res.json({
+      error,
+      ok: false,
+    });
+  }
+});
+
+app.delete("/deleteTask", async (req, res) => {
+  try {
+    let note = await Note.deleteMany();
     res.json({
       note,
       ok: true,

@@ -1,19 +1,42 @@
+import { callCorrectFunc } from "../helper.js";
 import { Note as noteData } from "../model.js";
 
 class NoteView {
   _parentElement = document.querySelector(".task_card_container");
 
-  /* constructor(title, body, date, priority) {
-    this.title = title;
-    this.body = body;
-    this.date = date;
-    this.priority = priority;
-  } */
-  addHandlerRemoveCard(handler) {
+  addHandlerNoteActions(showModal, removeNote) {
+    this._parentElement.addEventListener("click", (e) => {
+      let target = e.target?.id;
+      let parentEle;
+
+      if (target === undefined || target === "" || target === null) {
+        parentEle = e.target.closest(".task_card");
+      } else if (target === "delete_card_button") {
+        parentEle = e.target.closest("#delete_card_button");
+      }
+
+      if (!parentEle) return;
+
+      const action = parentEle.dataset.action;
+
+      switch (action) {
+        case "open_modal":
+          e.stopPropagation();
+          showModal(parentEle);
+          break;
+        case "close":
+          e.stopPropagation();
+          removeNote(parentEle);
+          break;
+      }
+    });
+  }
+
+  detectNoteChange(handler) {
     document
       .querySelector(".task_card_container")
-      .addEventListener("click", (e) => {
-        let ele = e.target.closest("span");
+      .addEventListener("keyup", (e) => {
+        let ele = e.target.closest("div");
         if (!ele) return;
         handler(ele);
       });
@@ -37,14 +60,14 @@ class NoteView {
 
   #generateNoteTemplate({ id, title, body, priority, objectId }, badgeColor) {
     return `
-        <div class="task_card" data-id=${objectId}>
-                <div class="task_card_header" >
-                  <p id="task_card_header_text">${title}</p>
-                  <span class="material-symbols-outlined" id="delete_card_button" data-id=${objectId} role="button">disabled_by_default</span>
+        <div class="task_card"  data-id="${objectId}" data-action="open_modal">
+                <div class="task_card_header">
+                  <p id="task_card_header_text" name="Utitle">${title.trim()}    </p>
+                  <span class="material-symbols-outlined" id="delete_card_button" data-id=${objectId} data-action="close" role="button">disabled_by_default</span>
                 </div>
                 <div class="task_card_body">
-                  <div class="task_card_body_content">
-                  ${body}
+                  <div class="task_card_body_content" name="Ubody" >
+                  ${body.trim()}
                   </div>
                 </div>
                 <div class="card_metadata">
@@ -52,7 +75,7 @@ class NoteView {
                     <span class="material-symbols-outlined">
                       priority_high
                     </span> 
-                    <span class="card_metadata_priority">${
+                    <span class="card_metadata_priority" name="Upriority ">${
                       priority === "1"
                         ? "High"
                         : priority === "2"
