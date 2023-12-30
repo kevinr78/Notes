@@ -11,6 +11,7 @@ import { sendAPIRequest } from "./helper.js";
 import NoteView from "./Views/Task.js";
 import Modal from "./Views/Modal.js";
 
+import User, { UsersSignIn, UsersLogin } from "./Views/User.js";
 // Handles events and other stuff
 
 //Event Listeners
@@ -18,8 +19,11 @@ import Modal from "./Views/Modal.js";
 async function processNewTaskData() {
   try {
     createNewNote();
-
-    let note = await sendAPIRequest("newTask", "POST", noteData.currentNote);
+    let note = await sendAPIRequest(
+      "note/newNote",
+      "POST",
+      noteData.currentNote
+    );
     updateNoteId(note);
     NoteView.renderUI();
   } catch (error) {
@@ -29,7 +33,7 @@ async function processNewTaskData() {
 
 async function removeNote(ele) {
   let noteId = { id: ele.dataset.id };
-  let deletedNote = await sendAPIRequest("deleteNote", "DELETE", noteId);
+  let deletedNote = await sendAPIRequest("note/deleteNote", "DELETE", noteId);
   let localDeletedNote = deleteNoteFromLocal(deletedNote);
   NoteView.removeNotefromView(localDeletedNote);
 }
@@ -43,16 +47,19 @@ function closeModal(ele) {
 }
 async function showModal(ele) {
   let noteId = { id: ele.dataset.id };
-  let note = await sendAPIRequest("getNote", "POST", noteId);
+  let note = await sendAPIRequest("note/getNote", "POST", noteId);
 
   noteData.currentNote = note;
   Modal.addDisplayModalHandler();
 }
-function updateNoteDetails() {
+async function updateNoteDetails() {
+  debugger;
   let eleNote = noteData.currentNote.note;
   let ele = document.querySelector(`[data-id='${eleNote._id}']`);
   let modalNote = document.querySelector(".modal");
   let updatedNote = compareNoteValue(modalNote, eleNote);
+
+  /*  let note = await sendAPIRequest("updateNote", "PATCH", updatedNote); */
 
   for (const data in noteData.lastNoteEdited) {
     if (noteData.lastNoteEdited[data][1]) {
@@ -115,11 +122,33 @@ function compareNoteValue(currentNote, existingNote) {
       toBeCompared.set(key, changedNote[key]);
       changedNote[key][1] = true;
     }
+    z;
   }
   noteData.lastNoteEdited = changedNote;
   return Object.fromEntries(toBeCompared);
 }
 
+/* Users Login and SignUp */
+
+export function addUserToApp() {
+  let name, emailId, password;
+
+  name = document.getElementById("name").value;
+  emailId = document.getElementById("sign-in-email").value;
+  password = document.getElementById("sign-in-password").value;
+  let newUser = new User(name, emailId, password);
+  if (newUser.validateUserData()) {
+    UsersSignIn.signInUser(newUser);
+  }
+}
+
+export function logInUserToApp() {
+  let emailId, password;
+  emailId = document.getElementById("login-email").value;
+  password = document.getElementById("login-password").value;
+  const userLoggedIn = UsersLogin.logInUser({ emailId, password });
+}
+/* 
 function init() {
   document
     .querySelector(".new_task_input_container")
@@ -150,4 +179,4 @@ function init() {
   Modal.addHandlerCloseModal(closeModal);
 }
 
-init();
+init(); */

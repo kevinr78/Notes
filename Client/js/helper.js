@@ -37,14 +37,14 @@ export async function sendAPIRequest(endpoint, method, payload) {
     });
 
     if (!response.ok) {
-      throw new Error("Error while Processing/getting data");
+      throw new Error(response);
     }
 
     let data = await response.json();
 
     return data;
   } catch (error) {
-    console.error(error);
+    console.error(JSON.stringify(error));
   }
 }
 

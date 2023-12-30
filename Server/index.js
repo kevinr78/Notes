@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 const noteRoute = require("./routes/note.route");
+const authRoute = require("./routes/auth.route");
 /* connection.ConnectDb(); */
 /* app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -24,6 +25,7 @@ const noteRoute = require("./routes/note.route");
 }); */
 
 app.use("/note", noteRoute);
+app.use("/auth", authRoute);
 /* app.get("/", (req, res) => {
   res.json("Hello");
 });

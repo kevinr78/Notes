@@ -5,6 +5,11 @@ export const Note = {
   lastNoteEdited: null,
 };
 
+export const user = {
+  currentUser: null,
+  lastLogin: null,
+};
+
 const task_title = document.getElementById("task_title");
 const task_body = document.getElementById("task_body");
 const task_priority = document.getElementById("task_priority");
