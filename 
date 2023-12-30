@@ -1,0 +1,108 @@
+[33mcommit 865198cb564964c8edb2ca239016e788b9840ab8[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Kevin Rodrigues <62834161+kevinr78@users.noreply.github.com>
+Date:   Sat Dec 30 22:47:30 2023 +0530
+
+    Delete package-lock.json
+
+[33mcommit 2d14ea938a006e17d74770e8bdcfb432c2ba649b[m
+Author: Kevin Rodrigues <62834161+kevinr78@users.noreply.github.com>
+Date:   Sat Dec 30 22:47:18 2023 +0530
+
+    Delete package.json
+
+[33mcommit 72308d1ec1010a46d65204e1dfcbbcbb7232265a[m
+Author: Kevin Rodrigues <62834161+kevinr78@users.noreply.github.com>
+Date:   Sat Dec 30 22:39:54 2023 +0530
+
+    Update README.md
+
+[33mcommit 9cb114bb91dcceb57fc6042d179078149cac3637[m
+Author: Kevin Rodrigues <62834161+kevinr78@users.noreply.github.com>
+Date:   Sat Dec 30 22:37:06 2023 +0530
+
+    Update README.md
+
+[33mcommit 835329fae6708aeb8cce7bb9168e3de919eed745[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Sat Dec 30 16:42:49 2023 +0530
+
+    Added server side login and signup functionality
+
+[33mcommit e0b657712ba287d89d2d3d9fd9bfdf4ab780e569[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Sat Dec 30 12:31:07 2023 +0530
+
+    Refactored Server Folders (Added routing, controllers)
+
+[33mcommit 78f2e501a821149cdb3eaaccd4bf1cecdcefe081[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Wed Dec 27 23:47:26 2023 +0530
+
+    Changes in notes are updated on frontend
+
+[33mcommit e5049b817c113c928b02c61c2833cf68a1e8f473[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Sat Dec 9 19:56:50 2023 +0530
+
+    Added handling for click listners to show modal and remove note
+
+[33mcommit 274fc5ff91da3377b8b494458f9a9c24a4706fc4[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Sun Nov 26 14:54:06 2023 +0530
+
+    Basic UI Changes 2
+
+[33mcommit fcd532f99b0e45f3dba147dae0e8382a93a6e54f[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Fri Nov 24 22:44:07 2023 +0530
+
+    Basic UI Changes-1
+
+[33mcommit b0a0c314be22698a0b82a2ff604b314d3d11df9f[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Wed Nov 22 22:23:05 2023 +0530
+
+    Delete Notes from server and update UI
+
+[33mcommit ceac9721626815a369592195bc7d15107a890e7d[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Sun Nov 19 21:08:53 2023 +0530
+
+    Refactored Code And added following functionalities \n 1. Add Card to UI \n 2.Add Card to Server
+
+[33mcommit ceeeb085766420184b44bd31173fb269cc21b6a7[m
+Merge: 3ee5aab bc7fc8c
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Sat Oct 21 12:24:02 2023 +0530
+
+    Basic DB setup
+
+[33mcommit 3ee5aab02dc6a777d300c39ef361b9b1af7cc5db[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Sat Oct 21 12:22:01 2023 +0530
+
+    Basic DB setup
+
+[33mcommit bc7fc8c42e1b6a8a38b58f5f7118845ab0235b9d[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Thu Oct 12 23:51:47 2023 +0530
+
+    Add delete card, card template and other functionalities
+
+[33mcommit d8c76a97ab5754e23d22f137b76a4567ea411b8d[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Fri Oct 6 00:03:28 2023 +0530
+
+    Added new header
+
+[33mcommit 1c63201d7e9e41dbfe2517f9eb89ede25e8efa15[m
+Author: Kevin Rodrigues <kevinrodrigues43@gmail.com>
+Date:   Sun Oct 1 19:54:11 2023 +0530
+
+    Basic UI with new note, new input remaining
+
+[33mcommit a198b576b7d5853ad243704cc4b477c6c0f61ef8[m
+Author: Kevin Rodrigues <62834161+kevinr78@users.noreply.github.com>
+Date:   Sun Apr 9 20:57:51 2023 +0530
+
+    Initial commit
