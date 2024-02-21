@@ -130,7 +130,7 @@ function compareNoteValue(currentNote, existingNote) {
 
 /* Users Login and SignUp */
 
-export function addUserToApp() {
+export async function addUserToApp() {
   let name, emailId, password;
 
   name = document.getElementById("name").value;
@@ -138,25 +138,38 @@ export function addUserToApp() {
   password = document.getElementById("sign-in-password").value;
   let newUser = new User(name, emailId, password);
   if (newUser.validateUserData()) {
-    UsersSignIn.signInUser(newUser);
+    let result = await UsersSignIn.signInUser(newUser);
+
+    if (result.ok) {
+      alert(result.message);
+      window.location.href = "http://localhost:5500/Client/html/index.html";
+    } else {
+      alert("here",result.message);
+    }
   }
 }
 
-export function logInUserToApp() {
+export async function logInUserToApp() {
   let emailId, password;
   emailId = document.getElementById("login-email").value;
   password = document.getElementById("login-password").value;
-  const userLoggedIn = UsersLogin.logInUser({ emailId, password });
+  const userLoggedIn = await UsersLogin.logInUser({ emailId, password });
+  if (userLoggedIn.ok) {
+    alert(userLoggedIn.message);
+     window.location.href = "http://localhost:5500/Client/html/index.html";
+  } else {
+   
+  }
 }
-/* 
+
 function init() {
   document
     .querySelector(".new_task_input_container")
     .addEventListener("click", (e) => {
-      document.querySelector(".toggle_input").classList.toggle("expand");
+      document.querySelector(".toggle_input").classList.add("expand");
     });
 
-  document.addEventListener("click", (e) => {
+  /*   document.addEventListener("click", (e) => {
     let ele = document.querySelector(".toggle_input");
     if (!document.querySelector(".new_task_container").contains(e.target)) {
       if (ele.classList.contains("expand")) {
@@ -164,7 +177,7 @@ function init() {
       }
     }
   });
-
+ */
   document.querySelector(".menu_btn").addEventListener("click", () => {
     let side_menu = document.querySelector(".side_menu_container");
     side_menu.classList.toggle("side_expand");
@@ -178,5 +191,5 @@ function init() {
   NoteView.addHandlerNoteActions(showModal, removeNote);
   Modal.addHandlerCloseModal(closeModal);
 }
-
+/* 
 init(); */

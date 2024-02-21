@@ -27,26 +27,29 @@ export default class User {
 class UserSignIn extends User {
   isUserSignedIn;
 
-  signInUser(user) {
+  async signInUser(user) {
     let userObj = {
       name: user.name,
       email: user.emailId,
       password: user.password,
     };
 
-    this.isUserSignedIn = sendAPIRequest("auth/signUp", "POST", userObj);
+    this.isUserSignedIn = await sendAPIRequest("auth/signUp", "POST", userObj);
+
+    return this.isUserSignedIn;
   }
 }
 
 class UserLogin {
   isUserLoggedIn;
-  logInUser(user) {
+  async logInUser(user) {
     let userObj = {
       emailId: user.emailId,
       password: user.password,
     };
 
-    this.isUserLoggedIn = sendAPIRequest("auth/login", "POST", userObj);
+    this.isUserLoggedIn = await sendAPIRequest("auth/login", "POST", userObj);
+    return this.isUserLoggedIn;
   }
 }
 

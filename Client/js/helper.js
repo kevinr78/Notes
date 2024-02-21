@@ -25,8 +25,9 @@ import { BASE_URL } from "./config.js";
 } */
 
 export async function sendAPIRequest(endpoint, method, payload) {
+  let apiData, responseData;
   try {
-    let response = await fetch(BASE_URL + endpoint, {
+    apiData = await fetch(BASE_URL + endpoint, {
       method: method,
       mode: "cors",
       headers: {
@@ -35,21 +36,15 @@ export async function sendAPIRequest(endpoint, method, payload) {
       },
       body: JSON.stringify(payload),
     });
+    responseData = await apiData.json();
 
-    if (!response.ok) {
-      throw new Error(response);
+    if (!responseData.ok) {
+      throw new Error(responseData.message);
     }
-
-    let data = await response.json();
-
-    return data;
+    console.log(responseData);
+    return responseData;
   } catch (error) {
-    console.error(JSON.stringify(error));
+    console.log(error.message);
+    return responseData;
   }
 }
-
-function getDataAttr(ele) {
-  return ele.dataset.action;
-}
-
-export function callCorrectFunc(eve) {}

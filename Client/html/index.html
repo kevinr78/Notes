@@ -21,42 +21,11 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../css/index.css" />
   </head>
   <body>
-  <!--   <div class="modal">
-     
-      <div class="modal-content">
-        <header> 
-          <span class="close">&times;</span>
-          <div class="modal_priority_select_container ">
-            <span class="material-symbols-outlined">
-              priority_high
-              </span> 
-            <select  required aria-label="select priority" name="modal_task_priority" id="modal_task_priority">
-              <option value="3">Low</option>
-              <option value="2">Medium</option>
-              <option value="1">High</option>
-            </select>
-          </div>
-        </header>
-        <section>
-          <p class="modal__note_title" contenteditable="true">
-            <strong>
-              Some text in the Modal..
-            </strong>
-           </p>
-
-          <div class="modal_note_body"  contenteditable="true">
-            Body of the model
-          </div>
-        </section>
-        <footer>
-          
-        </footer>
-      </div>
-     </div> -->
- <!--  -->
+ 
     <!-- Main -->
     <div class="side_nav_container" style="height: 100vh;">
       <!-- Navigation Bar-->
@@ -87,9 +56,25 @@
             </div>
           </div>
           <div class="account_info_container flex">
-           <!--  <div class="account">
-              <h3>Kevin</h3>
-            </div> -->
+             
+            <div class="notifications badge text-bg-light rounded-circle me-4">
+              <span class="material-symbols-outlined fs-4">
+                notifications
+                </span>
+            </div>
+            <div class="notifications badge text-bg-light rounded-circle me-4">
+              <span class="material-symbols-outlined fs-4">
+                settings
+                </span>
+            </div>
+              <div class="account-img badge text-bg-light rounded-circle">
+               <!--  <img class="rounded-circle " src="../images/1678880.jpg" width="30" height="30" /> -->
+                <span class="material-symbols-outlined fs-4">
+                  person
+                  </span>
+              </div>
+                
+           
           </div>
         
       </header>
@@ -121,9 +106,44 @@
             </nav>
           
         </div>
-        <div class="task_list">
-      
-          <div class="new_task_container">
+        <div class="notes_list">
+          <div class="notes_input_container">
+            <div class="accordion mt-2" width="50" id="accordionExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#noteInputBody" aria-expanded="true" aria-controls="collapseOne">
+                      <input type="text" class="form-control note_title_input" placeholder="Enter title here..." name="note_title"/>
+                  </button>
+                </h2>
+                <div id="noteInputBody" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <div class="note_content_container">
+                      <textarea class="form-control" aria-label="With textarea"></textarea>
+                    </div>
+                    <div class="note_meta_info_container">
+                      <div class="note_date">
+                        <input type="date" class="form-control">
+                      </div>
+                      <div class="note_image">
+                        <input type="file" class="form-control">
+                      </div>
+                      <div class="note_priority">
+                        <select class="form-select" aria-label="Default select example">
+                          
+                          <option selected value="3">Low</option>
+                          <option value="2">Two</option>
+                          <option value="1">High</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+         <!--  <div class="new_task_container accordion">
             <div class="new_task_input_container" id="new_task_input_container">
               <div class="task_data_input">
                 <div class="task_title_input_container">
@@ -149,12 +169,12 @@
                       Task Body 
                     </div>
                   </div>
-                  <!-- <div class="date_select_container metadata_container">
+                   <div class="date_select_container metadata_container">
                   <span class="material-symbols-outlined mr-1"> 
                       today
                       </span> 
                     <input requirded type="date" name="task_due_date" id="task_due_date" >
-                  </div> -->
+                  </div> 
                 </div>
                 <div class="new_task_options task_data_input mt-2">
                   <div class="new_task_options_left">
@@ -183,34 +203,10 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="task_card_container">
               <div class="notes_list">
-                <div class="task_card" data-id="6575f095939d9f6aee43fc94" data-action="open_modal">
-                  <div class="task_card_header">
-                    <p id="task_card_header_text" contenteditable="true">Kevindwsda    <span class="material-symbols-outlined" id="delete_card_button" data-id="6575f095939d9f6aee43fc94" data-action="close" role="button">disabled_by_default</span></p>
-                 
-                  </div>
-                  <div class="task_card_body">
-                    <div class="task_card_body_content" contenteditable="true">
-                    Task Body
-                    </div>
-                  </div>
-                  <div class="card_metadata">
-                    <p class="card_metadata_body text-bg-success">
-                      <span class="material-symbols-outlined">
-                        priority_high
-                      </span> 
-                      <span class="card_metadata_priority">Low</span>
-                    </p>
-                    <p class="card_metadata_body text-bg-secondary">
-                      <span class="material-symbols-outlined">
-                        schedule
-                        </span>
-                      <span class="card_metadata_date"> 10/12/2023</span>
-                    </p>
-                  </div>
-                </div>
+                
               </div>
           </div>
           

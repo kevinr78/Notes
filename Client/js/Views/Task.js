@@ -1,4 +1,3 @@
-import { callCorrectFunc } from "../helper.js";
 import { Note as noteData } from "../model.js";
 
 class NoteView {
