@@ -1,0 +1,441 @@
+
+
+:root{
+--dark_green : #264653;
+--moss_green: #2a9d8f;
+--orchre_yellow : #2a9d8f;
+--peach_hover: #f4a261;
+--tangerine:#e76f51;
+--black :#212529;
+--grey : #5f6368;
+--white:#fdfffc;
+--light-grey:#f1f3f4
+
+}
+.container-fluid{
+    padding: 0;
+}
+.material-symbols-outlined{
+    font-size: larger;
+
+}
+.new_task_options_left .material-symbols-outlined:hover , .new_task_options_right .material-symbols-outlined:hover{
+    background-color: var(--white);
+    border-radius: 15px;
+
+ }
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    font-family: 'Poppins', sans-serif;
+}
+[contenteditable] {
+    outline: 0px solid transparent;
+  }
+
+
+
+select{
+    border: none;
+    border-bottom: 2px solid var(--tangerine);
+outline:none;
+}
+.flex{
+    display: flex;
+}
+.nav_header{
+    background-color: var(--white);
+    position: relative;
+    width: 100%;
+    height: 80px;
+    position: relative;
+    align-items: center;
+    border-bottom: 2px solid var(--light-grey);
+}
+.side_menu_button{
+    
+    display: flex;
+    flex: 2 1 auto;
+    text-align: left;
+    align-items: center;
+    font-size: 25px;
+    height: 100%;
+
+}
+.side_menu_button .material-symbols-outlined{
+    margin-left: 30px;
+    padding: 15px;
+    background-color: transparent;
+    
+    
+}
+.side_menu_button .material-symbols-outlined:hover {
+    background-color: var(--light-grey);
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 15px;
+  
+
+}
+.search_note_container{
+    flex: 2 1 auto;
+   
+}
+.search_container{
+    border-radius: 6px;
+    align-items: center;
+    background-color: var(--light-grey);
+    margin-top: 11px;
+    width: 500px;
+}
+.search_icon{
+    margin-top: 3px;
+    margin-left: 5px;
+    background-color: var(--light-grey);
+}
+.search_container input{
+    border: none;
+    outline: none;
+    background-color:var(--light-grey);
+    height: 40px;
+    padding-inline-start: 3px;
+    width: 100%;
+    border-radius: 6px;
+}
+.search_input{
+    flex: 2 1 auto;
+}
+.account_info_container{
+    flex: 1 0 auto;
+    justify-content: end;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.task_viewer_container{
+    width: 100% ;
+    min-height: 100%;
+    position: relative;
+    display: flex;
+    
+}
+
+
+
+
+.side_menu_container{
+    background-color: var(--white);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   /*  height: calc(100% - 64px); */
+    min-height: 100%;
+    overflow: hidden;
+    padding-top: 8px;
+    transition-duration: 150ms;
+    transition-property: width,box-shadow,border-radius;
+    transition-timing-function: cubic-bezier(0.4,0,0.2,1);
+    width: 80px;
+    z-index: 100;
+    border-right: 2px solid var(--light-grey);
+
+}
+ .side_expand{
+    width: 250px;
+}
+.menu_text{
+    display: none;
+}
+
+
+.side_menu_container:hover .nav_list .nav_items .material-symbols-outlined{
+    text-align: left;}
+.nav_list{
+    width: 100%;
+    padding: 10px;
+}
+.nav_items{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+    padding: 10px;
+}
+.nav_items:hover{
+    background-color:var(--peach_hover) !important;
+    padding: 10px;
+    border-radius: 10px ;
+}
+.nav_items .material-symbols-outlined{
+    margin-right: 20px;
+}
+
+
+/* .nav_items{
+    display: flex;
+    justify-content: space-around;
+} */
+.menu_text{
+   margin-top: 5px;
+    font-weight: bold;
+}
+.nav_items .material-symbols-outlined{
+    font-size: 35px;
+}
+
+
+/* Notes */
+.notes_list{
+     width: 100%; 
+}
+
+.notes_input_container{
+    display: flex;
+    justify-content: center;
+}
+
+.accordion{
+    width: 80%;
+}
+
+.note_title_input{
+    width: 300px;
+    border: none;
+    outline: none;
+}
+.note_meta_info_container{
+    display: flex;
+}
+
+.note_meta_info_container{
+    display: flex;
+    justify-content: space-around;
+}
+
+.note_meta{
+    display: flex;
+    justify-content: space-between;
+}
+.card{
+    height: fit-content;
+}
+/* Note End */
+.task_list_col{
+position: relative;
+border-right: 2px solid var(--white) ;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+
+.task_list_header{
+    width: 60%;
+    height: 3rem;
+    text-align: center;
+    border-right: 2px solid #212529;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0 10px;
+    background-color: #264653;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.task_list_header p{
+    margin-top:10px ;
+   margin-right: 20px;
+   overflow-wrap: break-word;
+}
+
+.col_card_container{
+    padding: 0 2rem;
+}
+
+.task_metadata{
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+}
+
+
+/* Card CSS */
+
+.task_card{
+    max-width:300px;  
+    min-width: 20%;
+    height: max-content;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 10px;
+    background-color: var(--white);
+    padding: 10px;
+    border: 2px solid var(--peach_hover);
+}
+.task_card:hover{
+    -webkit-box-shadow: 10px 10px 6px 0px rgba(0,0,0,0.07);
+-moz-box-shadow: 10px 10px 6px 0px rgba(0,0,0,0.07);
+box-shadow: 10px 10px 6px 0px rgba(0,0,0,0.07);
+}
+.task_card_container{
+    width: 100%;
+    display: flex;
+    flex: 1 0 auto;
+    flex-wrap: wrap;
+    height: 500px;
+}
+.task_card_header{
+    margin: 10px 0 0px 10px;
+    font-weight: bold;
+    align-items: center;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    overflow-wrap: break-word;
+}
+.task_card_body{
+    margin: 0 0 20px 10px;
+    width: 250px;
+    overflow-wrap: break-word;
+
+}
+.card_metadata{
+    display: flex;
+    justify-content: flex-end;
+}
+.card_metadata_body{
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.task_card_close_button{
+    margin: 3px;
+}
+
+.task_card_close_button:hover{
+    background-color: #2a9d8f;
+    border-radius: 5px;
+    cursor:pointer;
+}
+
+
+/* New Task Container *//* 
+.new_task_container{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+   
+}
+
+.new_task_input_container{
+    width: 600px;
+    border-radius: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 2px 6px 2px rgba(60,64,67,0.149);
+    z-index: 100;
+    
+}
+.task_data_input,.task_body_input{
+    display: flex;
+    align-items: center;
+    overflow-wrap :break-word ;
+  
+}
+.task_title_input_container,.task_body_input_container{
+    flex: 1 1 450px;
+}
+.task_title_input,.task_body_input{
+    padding-top: 10px;
+    min-height: 43px;
+    max-width: 550px;
+    padding-inline-start: 10px;
+}
+.new_task_options{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+}
+.new_task_options_left,.new_task_options_right{
+    display: flex;
+    cursor: pointer;
+}
+
+.toggle_input{
+    max-height: 2px;
+    overflow: hidden;
+    transition: all .8s ease;
+}
+.expand {
+    max-height: 250px;
+  }
+  .task_body_input{
+    width: 100%;
+  }
+ */
+  /* The Modal (background) */
+.modal {
+ display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+
+.modal header{
+    display: flex  ;
+    align-items: center;
+    
+}
+
+.modal header span{
+    flex: 2 1 50px;
+}
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+  }
+
+  .modal-content  footer{
+    margin-top: 10px;
+    text-align: right;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
