@@ -211,6 +211,18 @@ outline:none;
     display: flex;
 }
 
+.note_meta_info_container{
+    display: flex;
+    justify-content: space-around;
+}
+
+.note_meta{
+    display: flex;
+    justify-content: space-between;
+}
+.card{
+    height: fit-content;
+}
 /* Note End */
 .task_list_col{
 position: relative;

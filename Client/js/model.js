@@ -1,8 +1,6 @@
 export const Note = {
   currentNote: null,
-  noteList: [],
-  noteCount: 0,
-  lastNoteEdited: null,
+  
 };
 
 export const user = {
@@ -10,31 +8,28 @@ export const user = {
   lastLogin: null,
 };
 
-const task_title = document.getElementById("task_title");
-const task_body = document.getElementById("task_body");
-const task_priority = document.getElementById("task_priority");
-
+const note_title = document.getElementById("note_title");
+const note_content = document.getElementById("note_content");
+const note_priority = document.getElementById("note_priority");
+/* Bug to be fixed, throw error if values are null, since function continues executing */
 export function createNewNote() {
   let tempNote = Object.create({});
 
   if (
-    task_title.textContent == "" ||
-    task_body.textContent == "" ||
-    task_priority.value == ""
+    note_title.value == "" ||
+    note_content.value == "" ||
+    note_priority.value == ""
   ) {
     alert("Please fill all the details");
     return;
   }
   tempNote["id"] = Note.noteCount + 1;
-  tempNote["title"] = task_title.textContent.trim() || null;
-  tempNote["body"] = task_body.textContent.trim();
-  tempNote["priority"] = task_priority.value.trim();
+  tempNote["title"] = note_title.value.trim() || null;
+  tempNote["content"] = note_content.value.trim();
+  tempNote["priority"] = note_priority.value.trim();
 
-  /*  tempTask["create_date"] = task_due_date.value; */
-
-  Note.noteList.push(tempNote);
-  Note.currentNote = tempNote;
-  Note.noteCount++;
+  Note.currentNote = tempNote
+  
 }
 
 export function updateNoteId(note) {
@@ -44,7 +39,7 @@ export function updateNoteId(note) {
   findNote.objectId = note.note._id;
   Note.currentNote["objectId"] = note.note._id;
 }
-
+/* 
 export function deleteNoteFromLocal({ deletedNote }) {
   let noteList = Note.noteList;
   let noteTobeDeleted = noteList.find((note, idx) => {
@@ -57,4 +52,4 @@ export function deleteNoteFromLocal({ deletedNote }) {
   );
 
   return noteTobeDeleted;
-}
+} */

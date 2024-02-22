@@ -112,27 +112,36 @@
               <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#noteInputBody" aria-expanded="true" aria-controls="collapseOne">
-                      <input type="text" class="form-control note_title_input" placeholder="Enter title here..." name="note_title"/>
+                      <input type="text" class="form-control note_title_input" value="Kevin's Note" placeholder="Enter title here..." id="note_title" name="note_title"/>
                   </button>
                 </h2>
                 <div id="noteInputBody" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
                     <div class="note_content_container">
-                      <textarea class="form-control" aria-label="With textarea"></textarea>
+                      <textarea class="form-control" aria-label="With textarea" id="note_content">Note</textarea>
                     </div>
-                    <div class="note_meta_info_container">
-                      <div class="note_date">
+                  <div class="note_meta_info_container mt-4">
+                      <!-- <div class="note_date">
+                        <span></span>
                         <input type="date" class="form-control">
-                      </div>
-                      <div class="note_image">
-                        <input type="file" class="form-control">
-                      </div>
-                      <div class="note_priority">
-                        <select class="form-select" aria-label="Default select example">
-                          
+                      </div> -->
+                     <!--  <div class="note_image note_meta">
+                        <input type="file" class="form-control" name="image" id="image">
+                      </div> -->
+                      <div class="note_priority note_meta">
+                        <span>Priority</span>
+                        <select class="form-select" aria-label="priority" 
+                        id="note_priority">
+                        
                           <option selected value="3">Low</option>
-                          <option value="2">Two</option>
+                          <option value="2">Medium</option>
                           <option value="1">High</option>
+                        </select>
+                      </div>
+                      <div class="notifications badge text-bg-light rounded-circle me-4">
+                        <button class="material-symbols-outlined fs-4 add_button" >
+                          add
+                        </button>
                         </select>
                       </div>
                     </div>

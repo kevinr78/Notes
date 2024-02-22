@@ -48,7 +48,31 @@ class NoteView {
         : noteData.currentNote.priority === "2"
         ? "text-bg-warning"
         : "text-bg-success";
-    let template = this.#generateNoteTemplate(noteData.currentNote, badgeColor);
+    let monthMap = {
+      0: "Jan",
+      1: "Feb",
+      2: "Mar",
+      3: "Apr",
+      4: "May",
+      5: "Jun",
+      6: "Jul",
+      7: "Aug",
+      8: "Sep",
+      8: "Oct",
+      9: "Nov",
+      10: "Dec",
+    };
+
+    let month = monthMap[new Date().getMonth()];
+    let day = new Date().getDate();
+
+    // Rendering the task card UI
+    let template = this.#generateNoteTemplate(
+      noteData.currentNote,
+      badgeColor,
+      month,
+      day
+    );
     this._parentElement.insertAdjacentHTML("beforeend", template);
 
     this.clearTaskModal();
@@ -57,45 +81,39 @@ class NoteView {
     document.querySelector(`div[data-id="${note.objectId}"]`).remove();
   }
 
-  #generateNoteTemplate({ id, title, body, priority, objectId }, badgeColor) {
+  #generateNoteTemplate(
+    { id, title, content, priority, objectId },
+    badgeColor,
+    month,
+    day
+  ) {
+   
     return `
-        <div class="task_card"  data-id="${objectId}" data-action="open_modal">
-                <div class="task_card_header">
-                  <p id="task_card_header_text" name="Utitle">${title.trim()}    </p>
-                  <span class="material-symbols-outlined" id="delete_card_button" data-id=${objectId} data-action="close" role="button">disabled_by_default</span>
-                </div>
-                <div class="task_card_body">
-                  <div class="task_card_body_content" name="Ubody" >
-                  ${body.trim()}
-                  </div>
-                </div>
-                <div class="card_metadata">
-                  <p class="card_metadata_body ${badgeColor}">
-                    <span class="material-symbols-outlined">
-                      priority_high
-                    </span> 
-                    <span class="card_metadata_priority" name="Upriority ">${
-                      priority === "1"
-                        ? "High"
-                        : priority === "2"
-                        ? "Medium"
-                        : "Low"
-                    }</span>
-                  </p>
-                  <p class="card_metadata_body text-bg-secondary">
-                    <span class="material-symbols-outlined">
-                      schedule
-                      </span>
-                    <span class="card_metadata_date"> ${new Date().toLocaleDateString()}</span>
-                  </p>
-                </div>
-              </div>`;
+        <div class="card me-4 mb-4" style="width: 18rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">${title}</h5>
+            <p class="card-text">${content}</p>
+            <span class="badge ${badgeColor}">
+              <span class="material-symbols-outlined">
+                priority_high
+              </span>
+              ${priority === "1" ? "High" : priority === "2" ? "Medium" : "Low"}
+            </span>
+              <span class="badge text-bg-light">
+                <span class="material-symbols-outlined">
+                  schedule  
+                </span> 
+                ${month} ${day}
+              </span>
+          </div>
+        </div>`;
   }
 
   clearTaskModal() {
-    task_title.value = "";
-    task_body.value = "";
-    task_priority.value = "3";
+    note_title.value = "";
+    note_content.value = "";
+    note_priority.value = "3";
   }
 }
 
