@@ -25,20 +25,22 @@ async function getUserNote(req, res) {
   }
 }
 
-async function createUserNote(req, res) {
+async function createUserNote(req, res, next) {
   let cleanedData = trimData(req.body);
   let newNote = new Note(cleanedData);
   try {
     const note = await newNote.save();
+
+    if (!note) {
+      throw new Error("Error while saving Note!");
+    }
     res.json({
       note,
+      message: "Note created successfully!",
       ok: true,
     });
   } catch (error) {
-    res.json({
-      error,
-      ok: false,
-    });
+    next(error);
   }
 }
 

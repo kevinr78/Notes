@@ -5,11 +5,12 @@ const {
   updateUserNote,
   deleteUserNote,
 } = require("../controllers/note");
+const {verifyjwt} =require('../utils/verifyJWT')
 /* post -->/getNote ,/newTask, patch--> /updateNote , delete --> /deleteNote */
 
-router.route("/getNote").post(getUserNote);
-router.route("/newNote").post(createUserNote);
-router.route("/updateNote").patch(updateUserNote);
-router.route("/deleteNote").delete(deleteUserNote);
+router.post("/getNote", verifyjwt ,getUserNote);
+router.post("/newNote",verifyjwt ,  createUserNote);
+router.patch("/updateNote",verifyjwt,updateUserNote);
+router.delete("/deleteNote",verifyjwt,deleteUserNote);
 
 module.exports = router;

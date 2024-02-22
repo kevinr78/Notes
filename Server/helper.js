@@ -1,10 +1,9 @@
-function trimData(Data) {
-  const { id, title, body, priority } = Data;
-  let Uid = Number(id.toString().trim());
-  let Utitle = title.trim();
-  let Ubody = body.trim();
-  let Upriority = Number(priority.toString().trim());
-  return { Uid, Utitle, Ubody, Upriority };
+function trimData(data) {
+  let id = Number(data.id.toString().trim());
+  let title = data.title.trim();
+  let content = data.content.trim();
+  let priority = Number(data.priority.toString().trim());
+  return { id, title, content, priority };
 }
 
 module.exports = trimData;
