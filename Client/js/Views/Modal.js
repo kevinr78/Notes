@@ -1,4 +1,4 @@
-import { Note } from "../model.js";
+import { Note as noteData } from "../controllers/note.controller.js";
 
 class Modal {
   #parentElement = document.querySelector(".task_card_container");

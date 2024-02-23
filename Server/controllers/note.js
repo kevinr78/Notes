@@ -1,38 +1,46 @@
 const trimData = require("../helper");
-
+const mongoose = require("mongoose");
 const Note = require("../model/noteModel");
-async function getUserNote(req, res) {
-  let noteId = req.body.id.trim();
-
+async function getUserNotes(req, res, next) {
+  debugger;
   try {
-    let note = await Note.findById({ _id: noteId });
-    if (!note) {
-      throw new Error("Error while fetching note");
+    let notes = await Note.find({
+      createdBy: req.currentuser.id,
+    }).select("content priority title _id ");
+    if (!notes) {
+      err = new Error("Error while fetching notes");
+      err.ok = 0;
+      err.status = 404;
+      throw err;
     }
-    note.Utitle = note.Utitle.trim();
-    note.Ubody = note.Ubody.trim();
-    note.Upriority = note.Upriority.toString().trim();
 
     res.json({
-      note,
+      note: notes,
       ok: true,
     });
   } catch (error) {
-    res.json({
-      error,
-      ok: false,
-    });
+    next(error);
   }
 }
 
 async function createUserNote(req, res, next) {
-  let cleanedData = trimData(req.body);
-  let newNote = new Note(cleanedData);
+  debugger;
+  let { title, content, priority } = trimData(req.body);
+  let user = req.currentuser;
+  let newNote = new Note({
+    title,
+    content,
+    priority,
+    createdBy: user.id,
+  });
   try {
     const note = await newNote.save();
-
+    console.log(note);
     if (!note) {
-      throw new Error("Error while saving Note!");
+      err = new Error("Error while saving notes");
+      err.ok = 0;
+      err.status = 404;
+      throw err;
     }
     res.json({
       note,
@@ -76,7 +84,7 @@ async function deleteUserNote(req, res) {
 }
 
 module.exports = {
-  getUserNote,
+  getUserNotes,
   createUserNote,
   updateUserNote,
   deleteUserNote,

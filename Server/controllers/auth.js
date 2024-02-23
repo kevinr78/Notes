@@ -4,7 +4,7 @@ const User = require("../model/userModel");
 
 async function loginUser(req, res, next) {
   let emailId, password, loggingInUser, passwordCheck, err, token;
-  debugger
+  debugger;
   try {
     emailId = req.body.emailId;
     password = req.body.password;
@@ -30,7 +30,12 @@ async function loginUser(req, res, next) {
     });
     return res
       .status(200)
-      .send({ message: "Successfully Logged In", status: 1, ok: 1 ,token:token});
+      .send({
+        message: "Successfully Logged In",
+        status: 1,
+        ok: 1,
+        token: token,
+      });
   } catch (error) {
     next(err);
   }
@@ -39,7 +44,7 @@ async function loginUser(req, res, next) {
 async function signUpUser(req, res, next) {
   let emailExists, hashedPassword, passwordSalt, newuser, err, token, savedUser;
   try {
-  debugger
+    debugger;
     let name = req.body.name.trim();
     let emailId = req.body.email.trim();
     let password = req.body.password.trim();
@@ -50,7 +55,7 @@ async function signUpUser(req, res, next) {
       err.status = 400;
       throw err;
     }
-   
+
     emailExists = await User.findOne({ emailId: emailId });
     if (emailExists) {
       err = new Error("User already exists. Please try logging in");
@@ -61,7 +66,7 @@ async function signUpUser(req, res, next) {
 
     passwordSalt = await bcrypt.genSalt(10);
     hashedPassword = await bcrypt.hash(password, passwordSalt);
-    
+
     newUser = new User({
       username: name,
       emailId: emailId,
@@ -69,26 +74,24 @@ async function signUpUser(req, res, next) {
     });
 
     savedUser = await newUser.save();
-   
+
     if (!savedUser) {
       err = new Error("Uanble to create user, please try again");
       err.ok = false;
       err.status = 403;
       throw err;
     }
-   
+
     token = jwt.sign({ id: newUser._id }, process.env.SECRET_TOKEN, {
       expiresIn: "1h",
     });
 
-    return res
-      .status(200)
-      .send({
-        message: "Account created successfully",
-        status: 1,
-        ok: true,
-        token:token
-      });
+    return res.status(200).send({
+      message: "Account created successfully",
+      status: 1,
+      ok: true,
+      token: token,
+    });
   } catch (error) {
     next(err);
   }

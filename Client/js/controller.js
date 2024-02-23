@@ -1,57 +1,13 @@
 //Imports
 ("use strict");
-import {
-  Note as noteData,
-  validateNoteData,
-  updateNoteId,
-  deleteNoteFromLocal,
-  Note,
-} from "./model.js";
-import { sendAPIRequest } from "./helper.js";
-import NoteView from "./Views/Task.js";
-import Modal from "./Views/Modal.js";
 
-import User, { UsersSignIn, UsersLogin } from "./Views/User.js";
-// Handles events and other stuff
+import { createNewNote, updateNoteId } from "./model.js";
+import { sendAPIRequest } from "./helper/apiRequest.js";
+import NoteView from "./Views/Note.js";
+import Modal from "./Views/Modal.js";
 
 //Event Listeners
 
-async function processNewTaskData() {
-  try {
-    validateNoteData();
-    let note = await sendAPIRequest(
-      "note/newNote",
-      "POST",
-      noteData.currentNote
-    );
-    updateNoteId(note);
-    NoteView.renderUI();
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function removeNote(ele) {
-  let noteId = { id: ele.dataset.id };
-  let deletedNote = await sendAPIRequest("note/deleteNote", "DELETE", noteId);
-/*   let localDeletedNote = deleteNoteFromLocal(deletedNote); */
-  NoteView.removeNotefromView(localDeletedNote);
-}
-
-function closeModal(ele) {
-  let modal = document.querySelector(".modal");
-  if (document.querySelector("body").contains(ele)) {
-    updateNoteDetails();
-    modal.style.display = "none";
-  }
-}
-async function showModal(ele) {
-  let noteId = { id: ele.dataset.id };
-  let note = await sendAPIRequest("note/getNote", "POST", noteId);
-
-  noteData.currentNote = note;
-  Modal.addDisplayModalHandler();
-}
 async function updateNoteDetails() {
   debugger;
   let eleNote = noteData.currentNote.note;
@@ -127,62 +83,3 @@ function compareNoteValue(currentNote, existingNote) {
   noteData.lastNoteEdited = changedNote;
   return Object.fromEntries(toBeCompared);
 }
-
-/* Users Login and SignUp */
-
-export async function addUserToApp() {
-  let name, emailId, password;
-
-  name = document.getElementById("name").value;
-  emailId = document.getElementById("sign-in-email").value;
-  password = document.getElementById("sign-in-password").value;
-  let newUser = new User(name, emailId, password);
-  if (newUser.validateUserData()) {
-    let {token,ok, message} =await  UsersSignIn.signInUser(newUser);
-   
-    if (ok) {
-      localStorage.setItem('token',token)
-      window.location.href = "http://localhost:5500/Client/html/index.html";
-    } else {
-      alert("here", message);
-    }
-  }
-}
-
-export async function logInUserToApp() {
-  let emailId, password;
-  emailId = document.getElementById("login-email").value;
-  password = document.getElementById("login-password").value;
-  const {token,ok, message} = await UsersLogin.logInUser({ emailId, password });
-  if (ok) {
-    window.location.href = "http://localhost:5500/Client/html/index.html";
-  } else {
-  }
-}
-
-function init() {
-  /*   document.addEventListener("click", (e) => {
-    let ele = document.querySelector(".toggle_input");
-    if (!document.querySelector(".new_task_container").contains(e.target)) {
-      if (ele.classList.contains("expand")) {
-        ele.classList.remove("expand");
-      }
-    }
-  });
- */
-  /*   document.querySelector(".menu_btn").addEventListener("click", () => {
-    let side_menu = document.querySelector(".side_menu_container");
-    side_menu.classList.toggle("side_expand");
-    document.querySelector(".menu_text").classList.toggle("menu_text");
-  }); */
-
-  document.querySelector(".add_button").addEventListener("click", () => {
-    processNewTaskData();
-  });
-
-  NoteView.addHandlerNoteActions(showModal, removeNote);
-  Modal.addHandlerCloseModal(closeModal);
-}
-
-init();
- 

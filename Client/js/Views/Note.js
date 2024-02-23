@@ -1,4 +1,4 @@
-import { Note as noteData } from "../model.js";
+import { Note as noteData } from "../controllers/note.controller.js";
 
 class NoteView {
   _parentElement = document.querySelector(".task_card_container");
@@ -42,12 +42,6 @@ class NoteView {
   }
 
   renderUI() {
-    let badgeColor =
-      noteData.currentNote.priority === "1"
-        ? "text-bg-danger"
-        : noteData.currentNote.priority === "2"
-        ? "text-bg-warning"
-        : "text-bg-success";
     let monthMap = {
       0: "Jan",
       1: "Feb",
@@ -67,27 +61,30 @@ class NoteView {
     let day = new Date().getDate();
 
     // Rendering the task card UI
-    let template = this.#generateNoteTemplate(
-      noteData.currentNote,
-      badgeColor,
-      month,
-      day
-    );
-    this._parentElement.insertAdjacentHTML("beforeend", template);
 
+    for (const note of noteData.currentNote) {
+      let badgeColor =
+        note.priority === 1
+          ? "text-bg-danger"
+          : note.priority === 2
+          ? "text-bg-warning"
+          : "text-bg-success";
+      let template = this.generateNoteTemplate(note, badgeColor, month, day);
+      this._parentElement.insertAdjacentHTML("beforeend", template);
+    }
     this.clearTaskModal();
   }
+
   removeNotefromView(note) {
     document.querySelector(`div[data-id="${note.objectId}"]`).remove();
   }
 
-  #generateNoteTemplate(
+  generateNoteTemplate(
     { id, title, content, priority, objectId },
     badgeColor,
     month,
     day
   ) {
-   
     return `
         <div class="card me-4 mb-4" style="width: 18rem;">
           <img src="..." class="card-img-top" alt="...">
@@ -98,7 +95,7 @@ class NoteView {
               <span class="material-symbols-outlined">
                 priority_high
               </span>
-              ${priority === "1" ? "High" : priority === "2" ? "Medium" : "Low"}
+              ${priority === 1 ? "High" : priority === 2 ? "Medium" : "Low"}
             </span>
               <span class="badge text-bg-light">
                 <span class="material-symbols-outlined">

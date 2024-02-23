@@ -1,4 +1,4 @@
-import { sendAPIRequest } from "../helper.js";
+import { sendAPIRequest } from "../helper/apiRequest.js";
 
 export default class User {
   isDataValidated;
@@ -9,18 +9,24 @@ export default class User {
   }
 
   validateUserData() {
+    let validErrors = [];
+
     if (this.name.length < 2 || /\d/.test(this.name)) {
       this.isDataValidated = false;
-      return "Name should be valid";
+      validErrors.push("Name should be valid");
     } else if (this.emailId.length < 2 || this.emailId.indexOf("@") == -1) {
       this.isDataValidated = false;
-      return "Email Id is incorrect";
+      validErrors.push("Email Id is incorrect");
     } else if (this.password.length < 2) {
       this.isDataValidated = false;
-      return "Password is incorrect";
+      validErrors.push("Password Length should be greate than 2 ");
     }
-    this.isDataValidated = true;
-    return this.isDataValidated;
+
+    if (validErrors.length > 0) {
+      return { isDataValidated: this.isDataValidated, errors: validErrors };
+    } else {
+      return { isDataValidated: !this.isDataValidated, errors: validErrors };
+    }
   }
 }
 

@@ -2,9 +2,10 @@ const { default: mongoose, Schema } = require("mongoose");
 
 const NoteSchema = new Schema(
   {
-    title: String,
-    content: String,
-    priority: Number,
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    priority: { type: Number, required: true },
+    createdBy: { type: Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );

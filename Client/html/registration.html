@@ -3,7 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+
+    <link
+      rel="stylesheet"
+      href="../node_modules/bootstrap/dist/css/bootstrap.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../node_modules/@popperjs/core/dist/esm/popper.js"
+    />
+
     <link rel="stylesheet" href="../css/registration.css" />
 
     <title>Document</title>
@@ -90,8 +100,18 @@
           </div>
         </div>
       </div>
+
+      <div class="toast-container"></div>
     </div>
-    <script type="module" src="../js/registration.js"></script>
- 
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      type="module"
+      src="../js/controllers/registration.controller.js"
+    ></script>
   </body>
 </html>
