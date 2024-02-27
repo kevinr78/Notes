@@ -1,74 +1,87 @@
 import { Note as noteData } from "../controllers/note.controller.js";
+import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
 
-class Modal {
-  #parentElement = document.querySelector(".task_card_container");
-
-  addDisplayModalHandler(handler) {
-    this.renderModal();
+export class Modal {
+  modalElementId = "#modal";
+  constructor(mtitle, mText, mPriority, noteId) {
+    this.modal = new bootstrap.Modal(this.modalElementId);
+    this.modalElementBody = this.modal._element;
+    this.title = mtitle;
+    this.body = mText;
+    this.priority = mPriority || "";
+    this.noteId = noteId || "";
   }
 
-  addHandlerCloseModal(handler) {
-    this.#parentElement.addEventListener("click", (e) => {
-      let target = e.target?.id;
-      let parentEle;
-
-      if (target === undefined || target === "" || target === null) {
-        parentEle = null;
-      } else if (target === "close_modal_span") {
-        parentEle = e.target.closest(".modal");
-      }
-
-      if (!parentEle) return;
-      handler(parentEle);
-    });
+  get modal() {
+    return this._modal;
   }
-  renderModal() {
-    let note = Note.currentNote.note;
 
-    let priority = note.Upriority == 3 ? "Low" : 2 ? "Medium" : "High";
+  set modal(value) {
+    this._modal = new bootstrap.Modal(this.modalElementId);
+  }
 
-    let modal = `
-  <div class="modal">
-    <div class='modal-container'>
-    <div class="modal-content">
-      <header> 
-        <span class="close" id="close_modal_span">&times;</span>
-        <div class="modal_priority_select_container ">
-          <span class="material-symbols-outlined">
-            priority_high
-            </span> 
-          <select  required aria-label="select priority" name="modal_task_priority" id="modal_task_priority">
-            <option value="1">High</option>
-            <option value="2">Medium</option>
-            <option value="3">Low</option>
-            
-          </select>
-        </div>
-      </header>
-      <section>
-        <p class="modal__note_title" contenteditable="true">
-          <strong>
-           ${note.Utitle}
-          </strong>
-         </p>
+  get noteId() {
+    return this._id;
+  }
 
-        <div class="modal_note_body"  contenteditable="true">
-        ${note.Ubody}
-        </div>
-      </section>
-      <footer>
-        
-      </footer>
-    </div>
-    </div>
-   </div>
-    `;
+  set noteId(value) {
+    this._id = value;
+  }
 
-    this.#parentElement.insertAdjacentHTML("afterbegin", modal);
-    document
-      .querySelector(".modal")
-      .querySelector("#modal_task_priority").selectedIndex = note.Upriority - 1;
+  get title() {
+    return this._title;
+  }
+  set title(value) {
+    this._title = value;
+  }
+
+  get body() {
+    return this._body;
+  }
+
+  set body(value) {
+    this._body = value;
+  }
+
+  get priority() {
+    return this._priority;
+  }
+
+  set priority(value) {
+    this._priority = value.toString().trim();
+  }
+
+  ModalElement() {
+    return this._modal;
+  }
+  /*  get modalElementBody() {
+    return this.modalElementBody;
+  }
+
+  set modalElementBody(value) {
+    this._modalElementBody = this._modal._element;
+  } */
+
+  showModal() {
+    let titleElement, bodyElement, priorityElement;
+
+    titleElement = this.modalElementBody.querySelector("#modal-note-title");
+    bodyElement = this.modalElementBody.querySelector("#modal-note-text");
+    priorityElement = this.modalElementBody.querySelector(
+      "#modal-note-priority"
+    );
+
+    console.log(this.priority);
+    titleElement.value = this.title;
+    bodyElement.innerText = this.body;
+    priorityElement.value = this.priority;
+
+    this.modal.show();
+  }
+
+  updateNote() {}
+
+  closeModal() {
+    this.modal.hide();
   }
 }
-
-export default new Modal();

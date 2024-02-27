@@ -1,6 +1,7 @@
 const trimData = require("../helper");
 const mongoose = require("mongoose");
 const Note = require("../model/noteModel");
+
 async function getUserNotes(req, res, next) {
   debugger;
   try {

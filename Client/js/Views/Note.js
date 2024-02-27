@@ -1,44 +1,30 @@
-import { Note as noteData } from "../controllers/note.controller.js";
+import {
+  Note as noteData,
+  priorityMap,
+} from "../controllers/note.controller.js";
+import { Modal } from "./Modal.js";
 
+export const MODAL_ELEMENT = {};
 class NoteView {
   _parentElement = document.querySelector(".task_card_container");
 
-  addHandlerNoteActions(showModal, removeNote) {
+  registerOpenNoteModalListener() {
     this._parentElement.addEventListener("click", (e) => {
-      let target = e.target?.id;
-      let parentEle;
+      let noteId, noteTitle, noteBody, notePriority, modal;
+      const targetEle = e.target.closest(".card");
 
-      if (target === undefined || target === "" || target === null) {
-        parentEle = e.target.closest(".task_card");
-      } else if (target === "delete_card_button") {
-        parentEle = e.target.closest("#delete_card_button");
-      }
+      if (!targetEle || targetEle === null || targetEle === undefined) return;
 
-      if (!parentEle) return;
+      noteId = targetEle.getAttribute("data-id");
+      noteTitle = targetEle.querySelector(".card-title").innerText;
+      noteBody = targetEle.querySelector(".card-text").innerText;
+      notePriority = targetEle.querySelector(".card-priority").textContent;
 
-      const action = parentEle.dataset.action;
-
-      switch (action) {
-        case "open_modal":
-          e.stopPropagation();
-          showModal(parentEle);
-          break;
-        case "close":
-          e.stopPropagation();
-          removeNote(parentEle);
-          break;
-      }
+      console.log("notePriority", typeof notePriority);
+      modal = new Modal(noteTitle, noteBody, notePriority, noteId);
+      MODAL_ELEMENT.modal = modal;
+      modal.showModal();
     });
-  }
-
-  detectNoteChange(handler) {
-    document
-      .querySelector(".task_card_container")
-      .addEventListener("keyup", (e) => {
-        let ele = e.target.closest("div");
-        if (!ele) return;
-        handler(ele);
-      });
   }
 
   renderUI() {
@@ -63,12 +49,8 @@ class NoteView {
     // Rendering the task card UI
 
     for (const note of noteData.currentNote) {
-      let badgeColor =
-        note.priority === 1
-          ? "text-bg-danger"
-          : note.priority === 2
-          ? "text-bg-warning"
-          : "text-bg-success";
+      let badgeColor = priorityMap[note.priority];
+
       let template = this.generateNoteTemplate(note, badgeColor, month, day);
       this._parentElement.insertAdjacentHTML("beforeend", template);
     }
@@ -80,29 +62,30 @@ class NoteView {
   }
 
   generateNoteTemplate(
-    { id, title, content, priority, objectId },
+    { _id, title, content, priority },
     badgeColor,
     month,
     day
   ) {
     return `
-        <div class="card me-4 mb-4" style="width: 18rem;">
+        <div class="card me-4 mb-4" style="width: 18rem;" data-id="${_id}">
           <img src="..." class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">${title}</h5>
             <p class="card-text">${content}</p>
-            <span class="badge ${badgeColor}">
+           
+            <span class="badge ${badgeColor} me-2">
               <span class="material-symbols-outlined">
                 priority_high
               </span>
-              ${priority === 1 ? "High" : priority === 2 ? "Medium" : "Low"}
+             <span class="card-priority "> ${priority} </span>
             </span>
-              <span class="badge text-bg-light">
+            <span class="badge text-bg-light">
                 <span class="material-symbols-outlined">
                   schedule  
                 </span> 
                 ${month} ${day}
-              </span>
+            </span>
           </div>
         </div>`;
   }

@@ -4,11 +4,10 @@ const User = require("../model/userModel");
 
 async function loginUser(req, res, next) {
   let emailId, password, loggingInUser, passwordCheck, err, token;
-  debugger;
+
   try {
     emailId = req.body.emailId;
     password = req.body.password;
-
     loggingInUser = await User.findOne({ emailId: emailId });
     if (!loggingInUser) {
       err = new Error("Email Id doesn't exist");
@@ -28,14 +27,13 @@ async function loginUser(req, res, next) {
     token = jwt.sign({ id: loggingInUser._id }, process.env.SECRET_TOKEN, {
       expiresIn: "1h",
     });
-    return res
-      .status(200)
-      .send({
-        message: "Successfully Logged In",
-        status: 1,
-        ok: 1,
-        token: token,
-      });
+
+    return res.status(200).send({
+      message: "Successfully Logged In",
+      status: 1,
+      ok: 1,
+      token: token,
+    });
   } catch (error) {
     next(err);
   }
@@ -86,12 +84,16 @@ async function signUpUser(req, res, next) {
       expiresIn: "1h",
     });
 
-    return res.status(200).send({
-      message: "Account created successfully",
-      status: 1,
-      ok: true,
-      token: token,
-    });
+    return res
+      .cookie("jwt", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({
+        message: "Account created successfully",
+        status: 1,
+        ok: true,
+      });
   } catch (error) {
     next(err);
   }

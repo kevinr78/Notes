@@ -5,9 +5,11 @@ const Note = require("./model/noteModel");
 const connection = require("./Conn");
 console.log("DB");
 const cors = require("cors");
+const cookie = require("cookie-parser");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookie());
 /* app.use(cors()); */
 
 /* connection.ConnectDb(); */

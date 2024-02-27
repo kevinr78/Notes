@@ -19,9 +19,59 @@
     <link rel="stylesheet" href="../css/note.css" />
   </head>
   <body>
- 
+   
+   
     <!-- Main -->
     <div class="side_nav_container" style="height: 100vh;">
+       
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modal" aria-hidden="true" data-bs-backdrop="false"
+    data-mdb-keyboard="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modal-title">Edit Note</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="modal-note-name" class="col-form-label">Title:</label>
+                <input type="text" class="form-control" id="modal-note-title">
+              </div>
+              <div class="mb-3">
+                <label for="modal-note-text" class="col-form-label">Content</label>
+                <textarea class="form-control" id="modal-note-text"></textarea>
+              </div>
+            </form>
+
+            <div class="note_meta_info_container mt-4">
+              <!-- <div class="note_date">
+                <span></span>
+                <input type="date" class="form-control">
+              </div> -->
+             <!--  <div class="note_image note_meta">
+                <input type="file" class="form-control" name="image" id="image">
+              </div> -->
+              <div class="note_priority note_meta">
+                <span>Priority</span>
+                <select class="form-select" aria-label="priority" 
+                id="modal-note-priority">
+                
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </div>
+            
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="update-note-btn">Update Note</button>
+          </div>
+        </div>
+      </div>
+    </div>
       <!-- Navigation Bar-->
       <header class="nav_header flex">
           
@@ -101,7 +151,7 @@
           
         </div>
         <div class="notes_list">
-          <div class="notes_input_container">
+          <div class="notes_input_container mb-4">
             <div class="accordion mt-2" width="50" id="accordionExample">
               <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -127,9 +177,9 @@
                         <select class="form-select" aria-label="priority" 
                         id="note_priority">
                         
-                          <option  value="3">Low</option>
-                          <option value="2">Medium</option>
-                          <option value="1">High</option>
+                          <option  value="Low">Low</option>
+                          <option value="Medium">Medium</option>
+                          <option value="High">High</option>
                         </select>
                       </div>
                       <div class="notifications badge text-bg-light rounded-circle me-4">
@@ -144,73 +194,9 @@
               </div>
               
             </div>
-          </div>
-          
-         <!--  <div class="new_task_container accordion">
-            <div class="new_task_input_container" id="new_task_input_container">
-              <div class="task_data_input">
-                <div class="task_title_input_container">
-                  <div class="task_title_input" contenteditable="true" aria-multiline="true" id="task_title" data-placeholder=" Title...">
-                 Kevin
-                  </div>
-                </div>
-                <div class="priority_select_container ">
-                  <span class="material-symbols-outlined">
-                    priority_high
-                    </span> 
-                  <select  required aria-label="select priority" name="task_priority" id="task_priority">
-                    <option value="3">Low</option>
-                    <option value="2">Medium</option>
-                    <option value="1">High</option>
-                  </select>
-                </div>
-              </div>
-              <div class="toggle_input " id="toggle_input">
-                <div class="task_data_input">
-                  <div class="task_body_input_container">
-                    <div class="task_body_input" contenteditable="true" aria-multiline="true" id="task_body" aria-placeholder=" Body..." role="textbox">
-                      Task Body 
-                    </div>
-                  </div>
-                   <div class="date_select_container metadata_container">
-                  <span class="material-symbols-outlined mr-1"> 
-                      today
-                      </span> 
-                    <input requirded type="date" name="task_due_date" id="task_due_date" >
-                  </div> 
-                </div>
-                <div class="new_task_options task_data_input mt-2">
-                  <div class="new_task_options_left">
-                    <div class="task_option" id="remind_me_button">
-                      <span role="button"  class="material-symbols-outlined">
-                        scan_delete
-                      </span>
-                    </div>
-                    <div class="task_option" id="delete_note_button">
-                      <span role="button"  class="material-symbols-outlined">
-                      add_alert
-                      </span></div>
-                  </div>
-                  <div class="new_task_options_right">
-                    <div class="add_button">
-                      <span class="material-symbols-outlined">
-                        add
-                        </span>
-                    </div>
-                    <div class="close_button">
-                      <span class="material-symbols-outlined" role="button">
-                        disabled_by_default
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
+          </div>      
           <div class="task_card_container">
-              <div class="notes_list">
-                
-              </div>
+              
           </div>
           
         

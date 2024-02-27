@@ -1,6 +1,7 @@
 import NoteView from "../Views/Note.js";
-import Modal from "../Views/Modal.js";
+import { Modal } from "../Views/Modal.js";
 import { sendAPIRequest } from "../helper/apiRequest.js";
+import { MODAL_ELEMENT } from "../Views/Note.js";
 
 export const Note = {
   currentNote: null,
@@ -12,9 +13,23 @@ const user = {
   lastLogin: null,
 };
 
+export const priorityMap = {
+  ["High"]: "text-bg-danger",
+  ["Medium"]: "text-bg-warning",
+  ["Low"]: "text-bg-success",
+};
+
+console.log(priorityMap.High);
+
+const listOfNotesToBeUpdated = cacheNotesToBeUpdated();
+
 const note_title = document.getElementById("note_title");
 const note_content = document.getElementById("note_content");
 const note_priority = document.getElementById("note_priority");
+
+//Modal Update Button
+const modalUpdateButton = document.getElementById("update-note-btn");
+
 /* Bug to be fixed, throw error if values are null, since function continues executing */
 
 function createNewNote() {
@@ -44,22 +59,10 @@ export function updateNoteId(note) {
   Note.currentNote["objectId"] = note.note._id;
 }
 
-NoteView.addHandlerNoteActions(showModal, removeNote);
-Modal.addHandlerCloseModal(closeModal);
-
 document.querySelector(".add_button").addEventListener("click", () => {
   processNewTaskData();
 });
 
-/* document.addEventListener("click", (e) => {
-  let ele = document.querySelector(".toggle_input");
-  if (!document.querySelector(".new_task_container").contains(e.target)) {
-    if (ele.classList.contains("expand")) {
-      ele.classList.remove("expand");
-    }
-  }
-});
- */
 document.querySelector(".menu_btn").addEventListener("click", () => {
   let side_menu = document.querySelector(".side_menu_container");
   side_menu.classList.toggle("side_expand");
@@ -82,34 +85,63 @@ async function processNewTaskData() {
   }
 }
 
-async function removeNote(ele) {
-  let noteId = { id: ele.dataset.id };
-  let deletedNote = await sendAPIRequest("note/deleteNote", "DELETE", noteId);
-  /*   let localDeletedNote = deleteNoteFromLocal(deletedNote); */
-  NoteView.removeNotefromView(localDeletedNote);
-}
-
-function closeModal(ele) {
-  let modal = document.querySelector(".modal");
-  if (document.querySelector("body").contains(ele)) {
-    updateNoteDetails();
-    modal.style.display = "none";
-  }
-}
-async function showModal(ele) {
-  let noteId = { id: ele.dataset.id };
-  let note = await sendAPIRequest("note/getNote", "POST", noteId);
-
-  noteData.currentNote = note;
-  Modal.addDisplayModalHandler();
-}
-
 async function getUserNotes() {
   let noteList = await sendAPIRequest("note/getNotes", "GET", null);
   Note.currentNote = noteList.note;
   NoteView.renderUI();
 }
 
+modalUpdateButton.onclick = () => {
+  let updatedNote = {};
+
+  updatedNote.titleElement = document.querySelector("#modal-note-title").value;
+  updatedNote.bodyElement = document.querySelector("#modal-note-text").value;
+  updatedNote.priorityElement = document.querySelector(
+    "#modal-note-priority"
+  ).value;
+
+  MODAL_ELEMENT.modal.closeModal();
+  let note = document.querySelector(
+    `div[data-id="${MODAL_ELEMENT.modal.noteId}"]`
+  );
+
+  note.querySelector(".card-title").textContent = updatedNote.titleElement;
+  note.querySelector(".card-text").textContent = updatedNote.bodyElement;
+  note.querySelector(".card-priority").textContent =
+    updatedNote.priorityElement;
+
+  note
+    .querySelector(".badge")
+    .classList.remove(
+      `${priorityMap[note.querySelector(".card-priority").textContent]}`
+    );
+
+  note
+    .querySelector(".badge")
+    .classList.add(`${priorityMap[updatedNote.priorityElement]}`);
+  listOfNotesToBeUpdated(MODAL_ELEMENT.modal.noteId, updatedNote);
+};
+
+function cacheNotesToBeUpdated() {
+  const cache = new Map();
+
+  return function (key = null, value = null) {
+    if (key === null && value === null) return cache;
+    if (cache.has(key)) {
+      cache.set(key, value);
+    } else {
+      cache.set(key, value);
+    }
+
+    return cache;
+  };
+}
+
 window.onload = function () {
   getUserNotes();
+  NoteView.registerOpenNoteModalListener();
 };
+/* setInterval(() => {
+  let data = listOfNotesToBeUpdated(null, null);
+}, 5000);
+ */
