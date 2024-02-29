@@ -10,7 +10,7 @@ const { verifyjwt } = require("../utils/verifyJWT");
 
 router.get("/getNotes", verifyjwt, getUserNotes);
 router.post("/newNote", verifyjwt, createUserNote);
-router.patch("/updateNote", verifyjwt, updateUserNote);
+router.post("/updateNote", verifyjwt, updateUserNote);
 router.delete("/deleteNote", verifyjwt, deleteUserNote);
 
 module.exports = router;

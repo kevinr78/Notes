@@ -20,7 +20,7 @@ export async function sendAPIRequest(endpoint, methodType, payload) {
     headers: headersSet,
   };
 
-  if (methodType === "POST" && payload !== null) {
+  if (methodType !== "GET" && payload !== null) {
     requestOptions.body = JSON.stringify(payload);
   }
 

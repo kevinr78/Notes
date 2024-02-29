@@ -24,14 +24,14 @@ function showErrorToast({ message }) {
 }
 function showSuccessToast(message) {
   let toast = `
-    <div class="toast-container position-fixed bottom-0 end-0 p-3 " data-bs-autohide="true">
+    <div class="toast-container  position-fixed bottom-0 end-0 p-3 " data-bs-autohide="true">
       <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header text-bg-danger">
+        <div class="toast-header border border-success">
           <strong class="me-auto">Message</strong>
           <small>${new Date().toLocaleTimeString()}</small>
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="toast-body text-bg-danger">
+        <div class="toast-body border border-success ">
           ${message}
         </div>
       </div>

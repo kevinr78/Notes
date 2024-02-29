@@ -2,7 +2,9 @@ import {
   Note as noteData,
   priorityMap,
 } from "../controllers/note.controller.js";
+import { sendAPIRequest } from "../helper/apiRequest.js";
 import { Modal } from "./Modal.js";
+import { showErrorToast, showSuccessToast } from "../helper/toast.js";
 
 export const MODAL_ELEMENT = {};
 class NoteView {
@@ -10,21 +12,35 @@ class NoteView {
 
   registerOpenNoteModalListener() {
     this._parentElement.addEventListener("click", (e) => {
-      let noteId, noteTitle, noteBody, notePriority, modal;
+      const targetEleType = e.target.type ?? "card";
       const targetEle = e.target.closest(".card");
-
-      if (!targetEle || targetEle === null || targetEle === undefined) return;
-
-      noteId = targetEle.getAttribute("data-id");
-      noteTitle = targetEle.querySelector(".card-title").innerText;
-      noteBody = targetEle.querySelector(".card-text").innerText;
-      notePriority = targetEle.querySelector(".card-priority").textContent;
-
-      console.log("notePriority", typeof notePriority);
-      modal = new Modal(noteTitle, noteBody, notePriority, noteId);
-      MODAL_ELEMENT.modal = modal;
-      modal.showModal();
+      const noteId = targetEle.getAttribute("data-id");
+      console.log(noteId);
+      switch (targetEleType) {
+        case "button":
+          this.removeNotefromView(noteId);
+          break;
+        case "card":
+          this.showNoteModal(targetEle, noteId);
+          break;
+        default:
+          return;
+      }
     });
+  }
+
+  showNoteModal(targetEle, noteId) {
+    let noteTitle, noteBody, notePriority, modal;
+
+    if (!targetEle || targetEle === null || targetEle === undefined) return;
+
+    noteTitle = targetEle.querySelector(".card-title").innerText;
+    noteBody = targetEle.querySelector(".card-text").innerText;
+    notePriority = targetEle.querySelector(".card-priority").textContent;
+
+    modal = new Modal(noteTitle, noteBody, notePriority, noteId);
+    MODAL_ELEMENT.modal = modal;
+    modal.showModal();
   }
 
   renderUI() {
@@ -49,32 +65,50 @@ class NoteView {
     // Rendering the task card UI
 
     for (const note of noteData.currentNote) {
-      let badgeColor = priorityMap[note.priority];
+      let priorityColorMap = priorityMap[note.priority];
 
-      let template = this.generateNoteTemplate(note, badgeColor, month, day);
+      let template = this.generateNoteTemplate(
+        note,
+        priorityColorMap,
+        month,
+        day
+      );
       this._parentElement.insertAdjacentHTML("beforeend", template);
     }
     this.clearTaskModal();
   }
 
-  removeNotefromView(note) {
-    document.querySelector(`div[data-id="${note.objectId}"]`).remove();
+  async removeNotefromView(noteId) {
+    /*  const isNoteDeleted = await sendAPIRequest("note/deleteNote", "DELETE", {
+      id: noteId,
+    });
+
+    if (!isNoteDeleted.ok) {
+      showErrorToast("Error while Deleting");
+    } */
+
+    showSuccessToast("Note Deleted Successfully");
+    /* document.querySelector(`div[data-id="${noteId}"]`).remove(); */
   }
 
   generateNoteTemplate(
     { _id, title, content, priority },
-    badgeColor,
+    priorityColorMap,
     month,
     day
   ) {
     return `
-        <div class="card me-4 mb-4" style="width: 18rem;" data-id="${_id}">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">${title}</h5>
-            <p class="card-text">${content}</p>
+        <div class="card ${priorityColorMap[1]} ${priorityColorMap[2]} border-success-subtle me-4 mb-4" data-click="card" style="width: 18rem;" data-id="${_id}">
+       
+          <!--<img src="..." class="card-img-top" alt="..."> -->
+          <div class="card-body" data-click="card">
+            <div class="d-flex justify-content-between">
+              <h3 class="card-title text-body-secondary">${title}</h3>
+              <button type="button" data-click="button" class="btn-close show-close-btn"  aria-label="Close"></button>
+            </div>
+            <p class="card-text text-body-secondary">${content}</p>
            
-            <span class="badge ${badgeColor} me-2">
+            <span class="badge ${priorityColorMap[0]} me-2">
               <span class="material-symbols-outlined">
                 priority_high
               </span>

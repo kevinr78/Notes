@@ -14,12 +14,10 @@ const user = {
 };
 
 export const priorityMap = {
-  ["High"]: "text-bg-danger",
-  ["Medium"]: "text-bg-warning",
-  ["Low"]: "text-bg-success",
+  ["High"]: ["text-bg-danger", "bg-danger-subtle", "border-danger-subtle"],
+  ["Medium"]: ["text-bg-warning", "bg-warning-subtle", "border-warning-subtle"],
+  ["Low"]: ["text-bg-success", "bg-success-subtle", "border-success-subtle"],
 };
-
-console.log(priorityMap.High);
 
 const listOfNotesToBeUpdated = cacheNotesToBeUpdated();
 
@@ -126,13 +124,11 @@ function cacheNotesToBeUpdated() {
   const cache = new Map();
 
   return function (key = null, value = null) {
-    if (key === null && value === null) return cache;
-    if (cache.has(key)) {
-      cache.set(key, value);
+    if (key === null && value === null) {
+      return cache;
     } else {
       cache.set(key, value);
     }
-
     return cache;
   };
 }
@@ -141,7 +137,3 @@ window.onload = function () {
   getUserNotes();
   NoteView.registerOpenNoteModalListener();
 };
-/* setInterval(() => {
-  let data = listOfNotesToBeUpdated(null, null);
-}, 5000);
- */

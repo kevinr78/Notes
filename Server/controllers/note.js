@@ -55,12 +55,10 @@ async function createUserNote(req, res, next) {
 
 async function updateUserNote(req, res) {
   try {
-    let filtered = Object.entries(req.body).filter(([key, value]) => {
-      return key !== "_id" || key !== "createdAt" || key !== "__v";
-    });
-    console.log("Filtered", filtered);
-    let updatedNote = await Note.findByIdAndUpdate(noteId, {});
-  } catch (error) {}
+    console.log(req.body);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function deleteUserNote(req, res) {
@@ -69,18 +67,19 @@ async function deleteUserNote(req, res) {
   try {
     let deletedNote = await Note.findByIdAndDelete({ _id: noteId });
     if (!deletedNote) {
-      throw new Error("Error while deleting note");
+      err = new Error("Error while saving notes");
+      err.ok = 0;
+      err.status = 404;
+      throw err;
     }
 
     res.json({
       deletedNote,
+      message: "Note deleted successfully",
       ok: true,
     });
   } catch (error) {
-    res.json({
-      error,
-      ok: false,
-    });
+    next(error);
   }
 }
 
