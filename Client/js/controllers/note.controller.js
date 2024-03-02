@@ -2,6 +2,7 @@ import NoteView from "../Views/Note.js";
 import { Modal } from "../Views/Modal.js";
 import { sendAPIRequest } from "../helper/apiRequest.js";
 import { MODAL_ELEMENT } from "../Views/Note.js";
+import { showErrorToast } from "../helper/toast.js";
 
 export const Note = {
   currentNote: null,
@@ -14,16 +15,24 @@ const user = {
 };
 
 export const priorityMap = {
-  ["High"]: ["text-bg-danger", "bg-danger-subtle", "border-danger-subtle"],
-  ["Medium"]: ["text-bg-warning", "bg-warning-subtle", "border-warning-subtle"],
-  ["Low"]: ["text-bg-success", "bg-success-subtle", "border-success-subtle"],
+  ["Work"]: ["text-bg-danger", "bg-danger-subtle", "border-danger-subtle"],
+  ["Productivity"]: [
+    "text-bg-warning",
+    "bg-warning-subtle",
+    "border-warning-subtle",
+  ],
+  ["Personal"]: [
+    "text-bg-success",
+    "bg-success-subtle",
+    "border-success-subtle",
+  ],
 };
 
 const listOfNotesToBeUpdated = cacheNotesToBeUpdated();
 
 const note_title = document.getElementById("note_title");
 const note_content = document.getElementById("note_content");
-const note_priority = document.getElementById("note_priority");
+const note_tags = document.getElementById("note_tags_choice");
 
 //Modal Update Button
 const modalUpdateButton = document.getElementById("update-note-btn");
@@ -36,16 +45,17 @@ function createNewNote() {
   if (
     note_title.value == "" ||
     note_content.value == "" ||
-    note_priority.value == ""
+    note_tags.value == ""
   ) {
     alert("Please fill all the details");
     return;
   }
+
   tempNote["id"] = Note.noteCount + 1;
   tempNote["title"] = note_title.value.trim() || null;
   tempNote["content"] = note_content.value.trim();
-  tempNote["priority"] = note_priority.value.trim();
-
+  tempNote["tags"] = note_tags.value.split(" ");
+  console.log(tempNote);
   Note.currentNote = tempNote;
 }
 
@@ -76,7 +86,7 @@ async function processNewTaskData() {
       Note.currentNote
     );
     Note.currentNote = [noteFromServer.note];
-    /* updateNoteId(note); */
+
     NoteView.renderUI();
   } catch (error) {
     console.error(error);
@@ -84,8 +94,21 @@ async function processNewTaskData() {
 }
 
 async function getUserNotes() {
-  let noteList = await sendAPIRequest("note/getNotes", "GET", null);
-  Note.currentNote = noteList.note;
+  let { message, status, ok, note } = await sendAPIRequest(
+    "note/getNotes",
+    "GET",
+    null
+  );
+
+  if (status === 498 && !ok) {
+    showErrorToast({ message });
+    setTimeout(() => {
+      window.location.href =
+        "http://localhost:5500/Client/html/registration.html";
+    }, 3000);
+  }
+
+  Note.currentNote = note;
   NoteView.renderUI();
 }
 
@@ -94,9 +117,7 @@ modalUpdateButton.onclick = () => {
 
   updatedNote.titleElement = document.querySelector("#modal-note-title").value;
   updatedNote.bodyElement = document.querySelector("#modal-note-text").value;
-  updatedNote.priorityElement = document.querySelector(
-    "#modal-note-priority"
-  ).value;
+  updatedNote.tagElement = document.querySelector("#modal-note-priority").value;
 
   MODAL_ELEMENT.modal.closeModal();
   let note = document.querySelector(
@@ -135,5 +156,5 @@ function cacheNotesToBeUpdated() {
 
 window.onload = function () {
   getUserNotes();
-  NoteView.registerOpenNoteModalListener();
+  NoteView.registerNotelListener();
 };

@@ -53,14 +53,14 @@
                 <input type="file" class="form-control" name="image" id="image">
               </div> -->
               <div class="note_priority note_meta">
-                <span>Priority</span>
-                <select class="form-select" aria-label="priority" 
-                id="modal-note-priority">
-                
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
-                </select>
+                <label for="note_tags" class="me-2">Tags</label>
+                <input  class="form-control" list="modal_note_tags" name="modal_note_tags" id="modal_note_tags">
+
+                <datalist id="modal_note_tags_list">
+                  <option value="Work">
+                  <option value="Productivity">
+                  <option value="Personal">
+                </datalist>
               </div>
             
             </div>
@@ -125,31 +125,7 @@
      
     
       <section class="task_viewer_container">
-        <div class="side_menu_container">
-          
-            <nav class="nav_list">
-              <div role="button" class="nav_items" tabindex="0" data-tooltip-text="Notes" aria-label="Notes" tooltip-suspended="false" style="user-select: none;">
-                <span class="material-symbols-outlined">
-                  description
-                  </span>
-                  <span class="menu_text"> Notes</span>
-              </div>
-              <div role="button" class="nav_items" tabindex="0" data-tooltip-text="Reminders" aria-label="Notes" tooltip-suspended="false" style="user-select: none;">
-                  <span class="material-symbols-outlined">
-                    notifications
-                  </span>
-                  <span class="menu_text"> Reminders</span>
-              </div>
-              <div role="button" class="nav_items" tabindex="0" data-tooltip-text="Bin" aria-label="Notes" tooltip-suspended="false" style="user-select: none;">
-                <span class="material-symbols-outlined">
-                  delete
-                  </span>
-                  <span class="menu_text"> Bin</span>
-              </div>
-           
-            </nav>
-          
-        </div>
+      
         <div class="notes_list">
           <div class="notes_input_container mb-4">
             <div class="accordion mt-2 rounded" >
@@ -172,15 +148,15 @@
                      <!--  <div class="note_image note_meta">
                         <input type="file" class="form-control" name="image" id="image">
                       </div> -->
-                      <div class="note_priority note_meta">
-                        <span>Priority</span>
-                        <select class="form-select" aria-label="priority" 
-                        id="note_priority">
-                        
-                          <option  value="Low">Low</option>
-                          <option value="Medium">Medium</option>
-                          <option value="High">High</option>
-                        </select>
+                      <div class="note_tags note_meta">
+                        <label for="note_tags_choice" class="me-2">Tags</label>
+                          <input  class="form-control" list="note_tags" name="note_tags_choice" id="note_tags_choice">
+
+                          <datalist id="note_tags">
+                            <option value="Work">
+                            <option value="Productivity">
+                            <option value="Personal">
+                          </datalist>
                       </div>
                       <div class="notifications badge text-bg-light rounded-circle me-4">
                         <button class="material-symbols-outlined fs-4 add_button" >

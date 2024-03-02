@@ -5,10 +5,10 @@ const {
   updateUserNote,
   deleteUserNote,
 } = require("../controllers/note");
-const { verifyjwt } = require("../utils/verifyJWT");
+const { verifyjwt, hasJWTExpired } = require("../utils/JWT.js");
 /* post -->/getNote ,/newTask, patch--> /updateNote , delete --> /deleteNote */
 
-router.get("/getNotes", verifyjwt, getUserNotes);
+router.get("/getNotes", verifyjwt, hasJWTExpired, getUserNotes);
 router.post("/newNote", verifyjwt, createUserNote);
 router.post("/updateNote", verifyjwt, updateUserNote);
 router.delete("/deleteNote", verifyjwt, deleteUserNote);

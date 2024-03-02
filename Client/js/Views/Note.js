@@ -10,18 +10,17 @@ export const MODAL_ELEMENT = {};
 class NoteView {
   _parentElement = document.querySelector(".task_card_container");
 
-  registerOpenNoteModalListener() {
+  registerNotelListener() {
     this._parentElement.addEventListener("click", (e) => {
       const targetEleType = e.target.type ?? "card";
-      const targetEle = e.target.closest(".card");
-      const noteId = targetEle.getAttribute("data-id");
-      console.log(noteId);
+      this.targetEle = e.target.closest(".card");
+      const noteId = this.targetEle.getAttribute("data-id");
       switch (targetEleType) {
         case "button":
           this.removeNotefromView(noteId);
           break;
         case "card":
-          this.showNoteModal(targetEle, noteId);
+          this.showNoteModal(this.targetEle, noteId);
           break;
         default:
           return;
@@ -44,6 +43,7 @@ class NoteView {
   }
 
   renderUI() {
+    console.log(noteData.currentNote);
     let monthMap = {
       0: "Jan",
       1: "Feb",
@@ -65,40 +65,35 @@ class NoteView {
     // Rendering the task card UI
 
     for (const note of noteData.currentNote) {
-      let priorityColorMap = priorityMap[note.priority];
-
-      let template = this.generateNoteTemplate(
-        note,
-        priorityColorMap,
-        month,
-        day
-      );
+      let template = this.generateNoteTemplate(note, month, day, priorityMap);
       this._parentElement.insertAdjacentHTML("beforeend", template);
     }
     this.clearTaskModal();
   }
 
   async removeNotefromView(noteId) {
-    /*  const isNoteDeleted = await sendAPIRequest("note/deleteNote", "DELETE", {
+    const isNoteDeleted = await sendAPIRequest("note/deleteNote", "DELETE", {
       id: noteId,
     });
 
     if (!isNoteDeleted.ok) {
       showErrorToast("Error while Deleting");
-    } */
+    }
 
     showSuccessToast("Note Deleted Successfully");
-    /* document.querySelector(`div[data-id="${noteId}"]`).remove(); */
+    document.querySelector(`div[data-id="${noteId}"]`).remove();
   }
 
   generateNoteTemplate(
-    { _id, title, content, priority },
-    priorityColorMap,
+    { _id, title, content, tags },
     month,
-    day
+    day,
+    priorityColorMap
   ) {
     return `
-        <div class="card ${priorityColorMap[1]} ${priorityColorMap[2]} border-success-subtle me-4 mb-4" data-click="card" style="width: 18rem;" data-id="${_id}">
+        <div class="card ${priorityColorMap[1]} ${
+      priorityColorMap[2]
+    } border-success-subtle me-4 mb-4" data-click="card" style="width: 18rem;" data-id="${_id}">
        
           <!--<img src="..." class="card-img-top" alt="..."> -->
           <div class="card-body" data-click="card">
@@ -107,19 +102,22 @@ class NoteView {
               <button type="button" data-click="button" class="btn-close show-close-btn"  aria-label="Close"></button>
             </div>
             <p class="card-text text-body-secondary">${content}</p>
-           
-            <span class="badge ${priorityColorMap[0]} me-2">
-              <span class="material-symbols-outlined">
-                priority_high
-              </span>
-             <span class="card-priority "> ${priority} </span>
-            </span>
-            <span class="badge text-bg-light">
+            <div id="card_note_tags">
+            ${tags
+              .map((ele) => {
+                return `<span class="badge rounded-pill ${
+                  priorityColorMap[ele]?.[0] ?? "text-bg-primary"
+                }  me-2">${ele}</span>`;
+              })
+              .join("")}
+              <span class="badge text-bg-light">
                 <span class="material-symbols-outlined">
                   schedule  
                 </span> 
                 ${month} ${day}
             </span>
+            </div>
+            
           </div>
         </div>`;
   }
@@ -127,7 +125,7 @@ class NoteView {
   clearTaskModal() {
     note_title.value = "";
     note_content.value = "";
-    note_priority.value = "3";
+    note_tags.value = "";
   }
 }
 

@@ -7,7 +7,7 @@ async function getUserNotes(req, res, next) {
   try {
     let notes = await Note.find({
       createdBy: req.currentuser.id,
-    }).select("content priority title _id ");
+    }).select("content tags title _id ");
     if (!notes) {
       err = new Error("Error while fetching notes");
       err.ok = 0;
@@ -26,17 +26,17 @@ async function getUserNotes(req, res, next) {
 
 async function createUserNote(req, res, next) {
   debugger;
-  let { title, content, priority } = trimData(req.body);
+  let { title, content, tags } = req.body;
   let user = req.currentuser;
   let newNote = new Note({
     title,
     content,
-    priority,
+    tags,
     createdBy: user.id,
   });
   try {
     const note = await newNote.save();
-    console.log(note);
+
     if (!note) {
       err = new Error("Error while saving notes");
       err.ok = 0;
