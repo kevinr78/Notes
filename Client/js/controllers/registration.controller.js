@@ -1,5 +1,5 @@
 /* Users Login and SignUp */
-import User, { UsersSignIn, UsersLogin } from "../Views/User.js";
+import User from "../Views/User.js";
 import { sendAPIRequest } from "../helper/apiRequest.js";
 import { showErrorToast, showSuccessToast } from "../helper/toast.js";
 
@@ -35,6 +35,7 @@ export async function addUserToApp() {
   emailId = document.getElementById("sign-in-email").value;
   password = document.getElementById("sign-in-password").value;
   let newUser = new User(name, emailId, password);
+
   try {
     const { dataValidationSuccess, errors } = newUser.validateUserData();
 
@@ -42,7 +43,7 @@ export async function addUserToApp() {
       throw new Error("Please Provide valid inputs");
     }
 
-    let { token, ok, message } = await UsersSignIn.signInUser(newUser);
+    let { token, ok, message } = await newUser.userSignIn();
 
     if (!ok) {
       throw new Error(message);
@@ -60,9 +61,9 @@ export async function logInUserToApp() {
   let emailId, password;
   emailId = document.getElementById("login-email").value;
   password = document.getElementById("login-password").value;
-
+  let newUser = new User(null, emailId, password);
   try {
-    const { token, ok, message } = await UsersLogin.logInUser({
+    const { token, ok, message } = await newUser.logInUser({
       emailId,
       password,
     });

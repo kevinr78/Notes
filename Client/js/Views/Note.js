@@ -1,4 +1,5 @@
 import {
+  Note,
   Note as noteData,
   priorityMap,
 } from "../controllers/note.controller.js";
@@ -69,7 +70,9 @@ class NoteView {
     }
 
     showSuccessToast("Note Deleted Successfully");
-    document.querySelector(`div[data-id="${noteId}"]`).remove();
+    let note = document.querySelector(`div[data-id="${noteId}"]`);
+    note.classList.add("zoom-out");
+    note.remove();
   }
 
   generateNoteTemplate(

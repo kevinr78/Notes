@@ -115,9 +115,10 @@ async function getUserNotes() {
         "http://localhost:5500/Client/html/registration.html";
     }, 3000);
   }
-
-  Note.currentNote = note;
-  NoteView.renderUI();
+  if (note) {
+    Note.currentNote = note;
+    NoteView.renderUI();
+  }
 }
 
 modalUpdateButton.onclick = () => {
