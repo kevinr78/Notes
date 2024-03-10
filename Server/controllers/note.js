@@ -7,7 +7,7 @@ async function getUserNotes(req, res, next) {
   try {
     let notes = await Note.find({
       createdBy: req.currentuser.id,
-    }).select("content tags title _id ");
+    }).select("content tags title _id updatedAt");
     if (!notes) {
       err = new Error("Error while fetching notes");
       err.ok = 0;
@@ -56,8 +56,26 @@ async function createUserNote(req, res, next) {
 async function updateUserNote(req, res) {
   try {
     console.log(req.body);
+    for (let i = 0; i < req.body.length; i++) {
+      let {
+        key,
+        value: { bodyElement, titleElement, tagElement },
+      } = req.body[i];
+
+      let updatedNote = await Note.findByIdAndUpdate(key, {
+        $set: {
+          title: titleElement,
+          content: bodyElement,
+          tags: tagElement,
+        },
+      });
+      if (!updatedNote) {
+        throw new Error("Failed update of notes");
+      }
+    }
+    res.json({ message: "Note updated successfully!", ok: true });
   } catch (error) {
-    console.log(error);
+    next(err);
   }
 }
 

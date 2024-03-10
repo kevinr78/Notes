@@ -23,7 +23,6 @@ export async function sendAPIRequest(endpoint, methodType, payload) {
   if (methodType !== "GET" && payload !== null) {
     requestOptions.body = JSON.stringify(payload);
   }
-
   try {
     apiData = await fetch(BASE_URL + endpoint, requestOptions);
 

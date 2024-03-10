@@ -3,12 +3,12 @@ import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
 
 export class Modal {
   modalElementId = "#modal";
-  constructor(mtitle, mText, mPriority, noteId) {
+  constructor(mtitle, mText, mTags, noteId) {
     this.modal = new bootstrap.Modal(this.modalElementId);
     this.modalElementBody = this.modal._element;
     this.title = mtitle;
     this.body = mText;
-    this.priority = mPriority || "";
+    this.tags = mTags;
     this.noteId = noteId || "";
   }
 
@@ -43,14 +43,6 @@ export class Modal {
     this._body = value;
   }
 
-  get priority() {
-    return this._priority;
-  }
-
-  set priority(value) {
-    this._priority = value.toString().trim();
-  }
-
   ModalElement() {
     return this._modal;
   }
@@ -63,18 +55,15 @@ export class Modal {
   } */
 
   showModal() {
-    let titleElement, bodyElement, priorityElement;
+    let titleElement, bodyElement, tagElement;
 
     titleElement = this.modalElementBody.querySelector("#modal-note-title");
     bodyElement = this.modalElementBody.querySelector("#modal-note-text");
-    priorityElement = this.modalElementBody.querySelector(
-      "#modal-note-priority"
-    );
-
-    console.log(this.priority);
+    tagElement = this.modalElementBody.querySelector("#modal_note_tags");
+    bodyElement.innerText = "";
     titleElement.value = this.title;
     bodyElement.innerText = this.body;
-    priorityElement.value = this.priority;
+    tagElement.value = this.tags.join(" ");
 
     this.modal.show();
   }

@@ -8,9 +8,3 @@
     b. Title, Body,
     c. Due Date/Time
     d. Tags
-
-
-    Collaborators
-
-    LIst option in card
-    reminderas, change background color
