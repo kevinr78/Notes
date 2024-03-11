@@ -35,7 +35,6 @@ const noteInput = document.getElementById("search_note_input");
 const modalUpdateButton = document.getElementById("update-note-btn");
 
 noteInput.oninput = searchForNotes;
-noteSearchBtn.onclick = searchForNotes;
 
 function searchForNotes() {
   let searchInputValue = noteInput.value.toLowerCase();
@@ -62,8 +61,7 @@ function createNewNote() {
     note_content.value == "" ||
     note_tags.value == ""
   ) {
-    alert("Please fill all the details");
-    return;
+    showErrorToast("Please fill all fields!");
   }
 
   tempNote["id"] = Note.noteCount + 1;
@@ -97,7 +95,7 @@ async function processNewTaskData() {
 
     getUserNotes();
   } catch (error) {
-    console.error(error);
+    showErrorToast(error);
   }
 }
 

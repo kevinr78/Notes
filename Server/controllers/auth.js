@@ -84,16 +84,12 @@ async function signUpUser(req, res, next) {
       expiresIn: "1h",
     });
 
-    return res
-      .cookie("jwt", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json({
-        message: "Account created successfully",
-        status: 1,
-        ok: true,
-      });
+    return res.status(200).json({
+      message: "Account created successfully",
+      status: 1,
+      token: token,
+      ok: true,
+    });
   } catch (error) {
     next(err);
   }

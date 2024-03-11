@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "animate.css": "^4.1.1",
     "bootstrap": "^5.3.3",
     "tailwind": "^4.0.0",
     "toastify-js": "^1.12.0"

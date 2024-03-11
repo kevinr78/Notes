@@ -33,26 +33,25 @@ class NoteView {
     let noteTitle,
       noteTagsEle,
       noteBody,
-      noteTags = [],
+      noteTag = [],
       modal;
 
     if (!targetEle || targetEle === null || targetEle === undefined) return;
 
     noteTitle = targetEle.querySelector(".card-title").innerText;
     noteBody = targetEle.querySelector(".card-text").innerText;
-    noteTagsEle = targetEle.querySelectorAll(".card_tag");
-    let noteTag = [];
-    for (let index = 0; index < noteTagsEle.length; index++) {
-      noteTag.push(noteTagsEle.item(index).textContent);
-    }
+    noteTagsEle = Array.from(targetEle.querySelectorAll(".card_tag"));
+    noteTag = Array.from(noteTagsEle.map((ele) => ele.innerText));
+
     modal = new Modal(noteTitle, noteBody, noteTag, noteId);
     MODAL_ELEMENT.modal = modal;
     modal.showModal();
   }
 
   renderUI() {
-    // Rendering the task card UI
+    // Rendering the note card UI
     this._parentElement.innerHTML = "";
+
     for (const note of noteData.currentNote) {
       let template = this.generateNoteTemplate(note, priorityMap);
       this._parentElement.insertAdjacentHTML("beforeend", template);
@@ -66,7 +65,7 @@ class NoteView {
     });
 
     if (!isNoteDeleted.ok) {
-      showErrorToast("Error while Deleting");
+      showErrorToast("Error while Deleting note");
     }
 
     showSuccessToast("Note Deleted Successfully");
@@ -77,7 +76,6 @@ class NoteView {
 
   generateNoteTemplate(
     { _id, title, content, tags, updatedAt },
-
     priorityColorMap
   ) {
     let monthMap = {
@@ -90,18 +88,18 @@ class NoteView {
       6: "Jul",
       7: "Aug",
       8: "Sep",
-      8: "Oct",
-      9: "Nov",
-      10: "Dec",
+      9: "Oct",
+      10: "Nov",
+      11: "Dec",
     };
 
     let month = monthMap[new Date(updatedAt).getMonth()];
     let day = new Date(updatedAt).getDate();
 
     return `
-        <div class="card ${priorityColorMap[1]} ${
+        <div class="card animate__animated  ${priorityColorMap[1]} ${
       priorityColorMap[2]
-    } border-success-subtle  me-4 mb-4" data-click="card" style="width: 18rem;" data-id="${_id}">
+    } border-success-subtle  animate_bounce me-4 mb-4" data-click="card" style="width: 18rem;" data-id="${_id}">
        
           <!--<img src="..." class="card-img-top" alt="..."> -->
           <div class="card-body" data-click="card">

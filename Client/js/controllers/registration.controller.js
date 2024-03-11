@@ -48,7 +48,6 @@ export async function addUserToApp() {
     if (!ok) {
       throw new Error(message);
     }
-
     localStorage.setItem("token", token);
     showSuccessToast(message);
     window.location.href = "http://localhost:5500/Client/html/note.html";
